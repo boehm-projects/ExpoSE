@@ -5,7 +5,7 @@
   "main": "lib/S$/src/symbols.js",
   "author": "Blake Loring",
   "engines": {
-    "node": "^14.16.1"
+    "node": "^16.14.0"
   },
   "scripts": {
     "test": "./scripts/run_tests"
