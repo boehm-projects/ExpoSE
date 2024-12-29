@@ -30,6 +30,7 @@ class Spawn {
 			return JSON.parse(data);
 		} catch (e) {
 			errors.push({error: "Exception E: " + e + " of " + type + " on " + data});
+			console.log(`[???] ${data},${type},${errors}`);
 			return null;
 		}
 	}

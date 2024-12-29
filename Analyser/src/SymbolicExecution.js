@@ -74,7 +74,7 @@ class SymbolicExecution {
 
 		this.state.errors.push({
 			error: "" + e,
-			stack: e.stack
+			stack: e.stack ? e.stack : ""
 		});
 	}
 
@@ -418,7 +418,7 @@ class SymbolicExecution {
 		if (this._scriptDepth() == 0) {
 			Log.log(enterString);
 		} else {
-			Log.logMid(enterString);
+			Log.log(enterString);
 		}
 
 		this._addScript(originalFileName);

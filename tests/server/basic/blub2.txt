@@ -1,0 +1,1068 @@
+Building Libs
+Successfully compiled 1 file with Babel (277ms).
+Building Distributor
+Successfully compiled 15 files with Babel (369ms).
+Building Analyser
+Successfully compiled 25 files with Babel (494ms).
+Building into /Users/moritz/uni/Masterarbeit/project/ExpoSE
+Bundling Analyser/bin/Analyser.js into bin/bundle.js
+[+] ExpoSE /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js concurrent: 10 timeout: 7200000 per-test: 1800000
+[-] [0 done /0 queued / 1 running / 0 errors / 0% coverage ] ***[1000D[0K[\] [0 done /0 queued / 1 running / 0 errors / 0% coverage ] ***(node:68594) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[!] Built with BASE logging enabled
+[!] Intial Input {"_bound":0}
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+queryData: uh
+|REGEX ENCODING| /<[A-Za-z0-9]+>[A-Za-z0-9]+<\/[A-Za-z0-9]>/.exec(client_data) -> (|0 Fill 8|, |0 Fill 9|) (|0 Fill 10|)
+[!] Refinements Enabled - Adding checks
+|REGEX ENCODING| /[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0 -9]*/.exec(client_data) -> (|1 Fill 3|, |1 Fill 4|) (|1 Fill 5|)
+[!] Refinements Enabled - Adding checks
+Request {
+  url: ConcolicValue {
+    concrete: '/test1',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'POST',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: 'uh',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 401,
+  headers: {},
+  body: { data: 'Wrong Data Format' }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[!] Finished play with PC (not (= method "GET")),(= method "POST"),(= path "/test1"),(str.in_re |0 Fill 0| (str.to_re "<")),(str.in_re |0 Fill 1|
+           (re.+ (re.union (re.union (re.range "A" "Z") (re.range "a" "z"))
+                           (re.range "0" "9")))),(str.in_re |0 Fill 2| (str.to_re ">")),(str.in_re |0 Fill 3|
+           (re.+ (re.union (re.union (re.range "A" "Z") (re.range "a" "z"))
+                           (re.range "0" "9")))),(str.in_re |0 Fill 4| (str.to_re "<")),(str.in_re |0 Fill 5| (str.to_re "/")),(str.in_re |0 Fill 6|
+           (re.union (re.union (re.range "A" "Z") (re.range "a" "z"))
+                     (re.range "0" "9"))),(str.in_re |0 Fill 7| (str.to_re ">")),(str.in_re (str.++ ""
+                   ""
+                   |0 Fill 0|
+                   |0 Fill 1|
+                   |0 Fill 2|
+                   |0 Fill 3|
+                   |0 Fill 4|
+                   |0 Fill 5|
+                   |0 Fill 6|
+                   |0 Fill 7|)
+           (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (str.to_re "<")
+                                                            (re.+ (re.union (re.union (re.range "A"
+                                                                                                "Z")
+                                                                                      (re.range "a"
+                                                                                                "z"))
+                                                                            (re.range "0"
+                                                                                      "9"))))
+                                                     (str.to_re ">"))
+                                              (re.+ (re.union (re.union (re.range "A"
+                                                                                  "Z")
+                                                                        (re.range "a"
+                                                                                  "z"))
+                                                              (re.range "0" "9"))))
+                                       (str.to_re "<"))
+                                (str.to_re "/"))
+                         (re.union (re.union (re.range "A" "Z")
+                                             (re.range "a" "z"))
+                                   (re.range "0" "9")))
+                  (str.to_re ">"))),(= |0 Fill 10|
+   (str.++ ""
+           ""
+           |0 Fill 0|
+           |0 Fill 1|
+           |0 Fill 2|
+           |0 Fill 3|
+           |0 Fill 4|
+           |0 Fill 5|
+           |0 Fill 6|
+           |0 Fill 7|)),(=> (str.in_re client_data
+               (re.++ (re.++ (re.* (re.range "\x00" "\xff"))
+                             (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (str.to_re "<")
+                                                                              (re.+ (re.union (re.union (re.range "A"
+                                                                                                                  "Z")
+                                                                                                        (re.range "a"
+                                                                                                                  "z"))
+                                                                                              (re.range "0"
+                                                                                                        "9"))))
+                                                                       (str.to_re ">"))
+                                                                (re.+ (re.union (re.union (re.range "A"
+                                                                                                    "Z")
+                                                                                          (re.range "a"
+                                                                                                    "z"))
+                                                                                (re.range "0"
+                                                                                          "9"))))
+                                                         (str.to_re "<"))
+                                                  (str.to_re "/"))
+                                           (re.union (re.union (re.range "A"
+                                                                         "Z")
+                                                               (re.range "a"
+                                                                         "z"))
+                                                     (re.range "0" "9")))
+                                    (str.to_re ">")))
+                      (re.* (re.range "\x00" "\xff"))))
+    (= client_data
+       (str.++ |0 Fill 8|
+               ""
+               ""
+               |0 Fill 0|
+               |0 Fill 1|
+               |0 Fill 2|
+               |0 Fill 3|
+               |0 Fill 4|
+               |0 Fill 5|
+               |0 Fill 6|
+               |0 Fill 7|
+               |0 Fill 9|))),(= (str.in_re client_data
+              (re.++ (re.++ (re.* (re.range "\x00" "\xff"))
+                            (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (str.to_re "<")
+                                                                             (re.+ (re.union (re.union (re.range "A"
+                                                                                                                 "Z")
+                                                                                                       (re.range "a"
+                                                                                                                 "z"))
+                                                                                             (re.range "0"
+                                                                                                       "9"))))
+                                                                      (str.to_re ">"))
+                                                               (re.+ (re.union (re.union (re.range "A"
+                                                                                                   "Z")
+                                                                                         (re.range "a"
+                                                                                                   "z"))
+                                                                               (re.range "0"
+                                                                                         "9"))))
+                                                        (str.to_re "<"))
+                                                 (str.to_re "/"))
+                                          (re.union (re.union (re.range "A" "Z")
+                                                              (re.range "a" "z"))
+                                                    (re.range "0" "9")))
+                                   (str.to_re ">")))
+                     (re.* (re.range "\x00" "\xff"))))
+   |IsMatch_/<[A-Za-z0-9]+>[A-Za-z0-9]+<\\/[A-Za-z0-9]>/_0|),(not (not (not (str.in_re client_data
+                          (re.++ (re.++ (re.* (re.range "\x00" "\xff"))
+                                        (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (re.++ (str.to_re "<")
+                                                                                         (re.+ (re.union (re.union (re.range "A"
+                                                                                                                             "Z")
+                                                                                                                   (re.range "a"
+                                                                                                                             "z"))
+                                                                                                         (re.range "0"
+                                                                                                                   "9"))))
+                                                                                  (str.to_re ">"))
+                                                                           (re.+ (re.union (re.union (re.range "A"
+                                                                                                               "Z")
+                                                                                                     (re.range "a"
+                                                                                                               "z"))
+                                                                                           (re.range "0"
+                                                                                                     "9"))))
+                                                                    (str.to_re "<"))
+                                                             (str.to_re "/"))
+                                                      (re.union (re.union (re.range "A"
+                                                                                    "Z")
+                                                                          (re.range "a"
+                                                                                    "z"))
+                                                                (re.range "0"
+                                                                          "9")))
+                                               (str.to_re ">")))
+                                 (re.* (re.range "\x00" "\xff"))))))),(str.in_re |1 Fill 0|
+           (re.+ (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.range "a"
+                                                                                                                                                                                                                                                       "z")
+                                                                                                                                                                                                                                             (re.range "A"
+                                                                                                                                                                                                                                                       "Z"))
+                                                                                                                                                                                                                                   (re.range "0"
+                                                                                                                                                                                                                                             "9"))
+                                                                                                                                                                                                                         (str.to_re "."))
+                                                                                                                                                                                                               (str.to_re "!"))
+                                                                                                                                                                                                     (str.to_re "#"))
+                                                                                                                                                                                           (str.to_re "$"))
+                                                                                                                                                                                 (str.to_re "%"))
+                                                                                                                                                                       (str.to_re "&"))
+                                                                                                                                                             (str.to_re "'"))
+                                                                                                                                                   (str.to_re "*"))
+                                                                                                                                         (str.to_re "+"))
+                                                                                                                               (str.to_re "/"))
+                                                                                                                     (str.to_re "="))
+                                                                                                           (str.to_re "?"))
+                                                                                                 (str.to_re "^"))
+                                                                                       (str.to_re "_"))
+                                                                             (str.to_re "`"))
+                                                                   (str.to_re "{"))
+                                                         (str.to_re "|"))
+                                               (str.to_re "}"))
+                                     (str.to_re "~"))
+                           (str.to_re "-")))),(str.in_re |1 Fill 1| (str.to_re "@")),(str.in_re |1 Fill 2|
+           (re.* (re.union (re.union (re.union (re.range "a" "z")
+                                               (re.range "A" "Z"))
+                                     (str.to_re "0"))
+                           (re.range " " "9")))),(str.in_re (str.++ "" "" |1 Fill 0| |1 Fill 1| |1 Fill 2|)
+           (re.++ (re.++ (re.+ (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.range "a"
+                                                                                                                                                                                                                                                                     "z")
+                                                                                                                                                                                                                                                           (re.range "A"
+                                                                                                                                                                                                                                                                     "Z"))
+                                                                                                                                                                                                                                                 (re.range "0"
+                                                                                                                                                                                                                                                           "9"))
+                                                                                                                                                                                                                                       (str.to_re "."))
+                                                                                                                                                                                                                             (str.to_re "!"))
+                                                                                                                                                                                                                   (str.to_re "#"))
+                                                                                                                                                                                                         (str.to_re "$"))
+                                                                                                                                                                                               (str.to_re "%"))
+                                                                                                                                                                                     (str.to_re "&"))
+                                                                                                                                                                           (str.to_re "'"))
+                                                                                                                                                                 (str.to_re "*"))
+                                                                                                                                                       (str.to_re "+"))
+                                                                                                                                             (str.to_re "/"))
+                                                                                                                                   (str.to_re "="))
+                                                                                                                         (str.to_re "?"))
+                                                                                                               (str.to_re "^"))
+                                                                                                     (str.to_re "_"))
+                                                                                           (str.to_re "`"))
+                                                                                 (str.to_re "{"))
+                                                                       (str.to_re "|"))
+                                                             (str.to_re "}"))
+                                                   (str.to_re "~"))
+                                         (str.to_re "-")))
+                         (str.to_re "@"))
+                  (re.* (re.union (re.union (re.union (re.range "a" "z")
+                                                      (re.range "A" "Z"))
+                                            (str.to_re "0"))
+                                  (re.range " " "9"))))),(= |1 Fill 5| (str.++ "" "" |1 Fill 0| |1 Fill 1| |1 Fill 2|)),(=> (str.in_re client_data
+               (re.++ (re.++ (re.* (re.range "\x00" "\xff"))
+                             (re.++ (re.++ (re.+ (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.range "a"
+                                                                                                                                                                                                                                                                                       "z")
+                                                                                                                                                                                                                                                                             (re.range "A"
+                                                                                                                                                                                                                                                                                       "Z"))
+                                                                                                                                                                                                                                                                   (re.range "0"
+                                                                                                                                                                                                                                                                             "9"))
+                                                                                                                                                                                                                                                         (str.to_re "."))
+                                                                                                                                                                                                                                               (str.to_re "!"))
+                                                                                                                                                                                                                                     (str.to_re "#"))
+                                                                                                                                                                                                                           (str.to_re "$"))
+                                                                                                                                                                                                                 (str.to_re "%"))
+                                                                                                                                                                                                       (str.to_re "&"))
+                                                                                                                                                                                             (str.to_re "'"))
+                                                                                                                                                                                   (str.to_re "*"))
+                                                                                                                                                                         (str.to_re "+"))
+                                                                                                                                                               (str.to_re "/"))
+                                                                                                                                                     (str.to_re "="))
+                                                                                                                                           (str.to_re "?"))
+                                                                                                                                 (str.to_re "^"))
+                                                                                                                       (str.to_re "_"))
+                                                                                                             (str.to_re "`"))
+                                                                                                   (str.to_re "{"))
+                                                                                         (str.to_re "|"))
+                                                                               (str.to_re "}"))
+                                                                     (str.to_re "~"))
+                                                           (str.to_re "-")))
+                                           (str.to_re "@"))
+                                    (re.* (re.union (re.union (re.union (re.range "a"
+                                                                                  "z")
+                                                                        (re.range "A"
+                                                                                  "Z"))
+                                                              (str.to_re "0"))
+                                                    (re.range " " "9")))))
+                      (re.* (re.range "\x00" "\xff"))))
+    (= client_data
+       (str.++ |1 Fill 3| "" "" |1 Fill 0| |1 Fill 1| |1 Fill 2| |1 Fill 4|))),(= (str.in_re client_data
+              (re.++ (re.++ (re.* (re.range "\x00" "\xff"))
+                            (re.++ (re.++ (re.+ (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.range "a"
+                                                                                                                                                                                                                                                                                      "z")
+                                                                                                                                                                                                                                                                            (re.range "A"
+                                                                                                                                                                                                                                                                                      "Z"))
+                                                                                                                                                                                                                                                                  (re.range "0"
+                                                                                                                                                                                                                                                                            "9"))
+                                                                                                                                                                                                                                                        (str.to_re "."))
+                                                                                                                                                                                                                                              (str.to_re "!"))
+                                                                                                                                                                                                                                    (str.to_re "#"))
+                                                                                                                                                                                                                          (str.to_re "$"))
+                                                                                                                                                                                                                (str.to_re "%"))
+                                                                                                                                                                                                      (str.to_re "&"))
+                                                                                                                                                                                            (str.to_re "'"))
+                                                                                                                                                                                  (str.to_re "*"))
+                                                                                                                                                                        (str.to_re "+"))
+                                                                                                                                                              (str.to_re "/"))
+                                                                                                                                                    (str.to_re "="))
+                                                                                                                                          (str.to_re "?"))
+                                                                                                                                (str.to_re "^"))
+                                                                                                                      (str.to_re "_"))
+                                                                                                            (str.to_re "`"))
+                                                                                                  (str.to_re "{"))
+                                                                                        (str.to_re "|"))
+                                                                              (str.to_re "}"))
+                                                                    (str.to_re "~"))
+                                                          (str.to_re "-")))
+                                          (str.to_re "@"))
+                                   (re.* (re.union (re.union (re.union (re.range "a"
+                                                                                 "z")
+                                                                       (re.range "A"
+                                                                                 "Z"))
+                                                             (str.to_re "0"))
+                                                   (re.range " " "9")))))
+                     (re.* (re.range "\x00" "\xff"))))
+   |IsMatch_/[a-zA-Z0-9.!#$%&'*+\\/=?^_`{\|}~-]+@[a-zA-Z0 -9]*/_1|),(not (str.in_re client_data
+                (re.++ (re.++ (re.* (re.range "\x00" "\xff"))
+                              (re.++ (re.++ (re.+ (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.union (re.range "a"
+                                                                                                                                                                                                                                                                                        "z")
+                                                                                                                                                                                                                                                                              (re.range "A"
+                                                                                                                                                                                                                                                                                        "Z"))
+                                                                                                                                                                                                                                                                    (re.range "0"
+                                                                                                                                                                                                                                                                              "9"))
+                                                                                                                                                                                                                                                          (str.to_re "."))
+                                                                                                                                                                                                                                                (str.to_re "!"))
+                                                                                                                                                                                                                                      (str.to_re "#"))
+                                                                                                                                                                                                                            (str.to_re "$"))
+                                                                                                                                                                                                                  (str.to_re "%"))
+                                                                                                                                                                                                        (str.to_re "&"))
+                                                                                                                                                                                              (str.to_re "'"))
+                                                                                                                                                                                    (str.to_re "*"))
+                                                                                                                                                                          (str.to_re "+"))
+                                                                                                                                                                (str.to_re "/"))
+                                                                                                                                                      (str.to_re "="))
+                                                                                                                                            (str.to_re "?"))
+                                                                                                                                  (str.to_re "^"))
+                                                                                                                        (str.to_re "_"))
+                                                                                                              (str.to_re "`"))
+                                                                                                    (str.to_re "{"))
+                                                                                          (str.to_re "|"))
+                                                                                (str.to_re "}"))
+                                                                      (str.to_re "~"))
+                                                            (str.to_re "-")))
+                                            (str.to_re "@"))
+                                     (re.* (re.union (re.union (re.union (re.range "a"
+                                                                                   "z")
+                                                                         (re.range "A"
+                                                                                   "Z"))
+                                                               (str.to_re "0"))
+                                                     (re.range " " "9")))))
+                       (re.* (re.range "\x00" "\xff")))))
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-ITTMBbcJrGm3
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-X5avJlhfQwIJ
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-X5avJlhfQwIJ
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-X5avJlhfQwIJ
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-X5avJlhfQwIJ
+Expanding alternatives [
+  {
+    input: { client_data: '', path: '', method: 'GET', _bound: 1 },
+    pc: '',
+    forkIid: 88
+  },
+  {
+    input: { client_data: '', path: '', method: '', _bound: 2 },
+    pc: '',
+    forkIid: 80
+  },
+  {
+    input: { client_data: '', path: '', method: 'POST', _bound: 3 },
+    pc: '',
+    forkIid: 24
+  },
+  {
+    input: {
+      client_data: '\x00<0>000</0>',
+      path: '/test1',
+      method: 'POST',
+      _bound: 16
+    },
+    pc: '',
+    forkIid: 40
+  }
+]
+[1000D[0K[|] [1 done /3 queued / 1 running / 1 errors / 33% coverage ] ***[1000D[0K[/] [1 done /2 queued / 2 running / 1 errors / 33% coverage ] ***[1000D[0K[-] [1 done /1 queued / 3 running / 1 errors / 33% coverage ] ***[1000D[0K[\] [1 done /0 queued / 4 running / 1 errors / 33% coverage ] ***[1000D[0K[|] [1 done /0 queued / 4 running / 1 errors / 33% coverage ] ***[!] Built with BASE logging enabled
+[!] Built with BASE logging enabled
+[!] Built with BASE logging enabled
+[!] Built with BASE logging enabled
+[!] Intial Input {"client_data":"","path":"","method":"POST","_bound":3}
+[!] Intial Input {"client_data":"\u0000<0>000</0>","path":"/test1","method":"POST","_bound":16}
+[!] Intial Input {"client_data":"","path":"","method":"GET","_bound":1}
+[!] Intial Input {"client_data":"","path":"","method":"","_bound":2}
+Transforming
+Transforming
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Transforming
+Transforming
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+Transforming
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+Transforming
+Transforming
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+Request {
+  url: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response { statusCode: 404, headers: {}, body: { data: 'Not Found' } }
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+queryData:  <0>000</0>
+Request {
+  url: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'POST',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 401,
+  headers: {},
+  body: { data: 'Invalid POST request' }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[!] Finished play with PC (not (= method "GET")),(not (= method "POST"))
+[!] Finished play with PC (not (= method "GET")),(= method "POST"),(not (= path "/test1")),(not (= path "/test2"))
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+|REGEX ENCODING| /<[A-Za-z0-9]+>[A-Za-z0-9]+<\/[A-Za-z0-9]>/.exec(client_data) -> (|0 Fill 8|, |0 Fill 9|) (|0 Fill 10|)
+[!] Refinements Enabled - Adding checks
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-FqATG5z4MprB
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+/Users/moritz/uni/Masterarbeit/project/ExpoSE/Analyser/bin/SymbolicExecution.js:70
+      _Log["default"].log("Uncaught exception ".concat(e, " Stack: ").concat(e.stack ? e.stack : ""));
+                                                                               ^
+
+TypeError: Cannot read properties of undefined (reading 'stack')
+    at SymbolicExecution._uncaughtException (/Users/moritz/uni/Masterarbeit/project/ExpoSE/Analyser/bin/SymbolicExecution.js:70:80)
+    at process.emit (node:events:517:28)
+    at process._fatalException (node:internal/process/execution:169:25)
+
+Node.js v18.20.4
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-r6jk9lfu1gwf
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-OR9iwb50Zkkq
+|REGEX ENCODING| /^\/hello_world$/.exec(path) -> (, ) (|0 Fill 3|)
+[!] Refinements Enabled - Adding checks
+Request {
+  url: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'GET',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 403,
+  headers: { 'Content-Type': 'text/plain' },
+  body: { data: 'Invalid GET request' }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[???] 
+[???] 
+[1000D[0K[/] [2 done /0 queued / 3 running / 2 errors / 33% coverage ] ***[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-Y647TXFzn0wh
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-Y647TXFzn0wh
+Expanding alternatives []
+[1000D[0K[-] [3 done /0 queued / 2 running / 2 errors / 34% coverage ] ***Expanding alternatives [
+  {
+    input: { client_data: '', path: '/test2', method: 'POST', _bound: 4 },
+    pc: '',
+    forkIid: 32
+  }
+]
+[1000D[0K[\] [4 done /0 queued / 2 running / 2 errors / 35% coverage ] ***[1000D[0K[|] [4 done /0 queued / 2 running / 2 errors / 35% coverage ] ***[!] Finished play with PC (= method "GET"),(str.in_re |0 Fill 0| (str.to_re "/")),(str.in_re |0 Fill 1| (str.to_re "hello")),(str.in_re |0 Fill 2| (str.to_re "_world")),(str.in_re (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)
+           (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                  (str.to_re "_world"))),(= |0 Fill 3| (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)),(=> (str.in_re path
+               (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                      (str.to_re "_world")))
+    (= path (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|))),(= (str.in_re path
+              (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                     (str.to_re "_world")))
+   |IsMatch_/^\\/hello_world$/_0|),(not (str.in_re path
+                (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                       (str.to_re "_world")))),(not (= path "/health")),(not (= path "/test1")),(not (= path "/test2"))
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-cICumTeE2uGa
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-86MBUjXe38FL
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-86MBUjXe38FL
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-86MBUjXe38FL
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-86MBUjXe38FL
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-86MBUjXe38FL
+Expanding alternatives [
+  {
+    input: { client_data: '', path: '/hello_world', method: 'GET', _bound: 9 },
+    pc: '',
+    forkIid: 72
+  },
+  {
+    input: { client_data: '', path: '/health', method: 'GET', _bound: 10 },
+    pc: '',
+    forkIid: 48
+  },
+  {
+    input: { client_data: '', path: '/test1', method: 'GET', _bound: 11 },
+    pc: '',
+    forkIid: 56
+  },
+  {
+    input: { client_data: '', path: '/test2', method: 'GET', _bound: 12 },
+    pc: '',
+    forkIid: 64
+  }
+]
+[1000D[0K[/] [5 done /3 queued / 2 running / 2 errors / 39% coverage ] ***[1000D[0K[-] [5 done /2 queued / 3 running / 2 errors / 39% coverage ] ***[1000D[0K[\] [5 done /1 queued / 4 running / 2 errors / 39% coverage ] ***[1000D[0K[|] [5 done /0 queued / 5 running / 2 errors / 39% coverage ] ***[1000D[0K[/] [5 done /0 queued / 5 running / 2 errors / 39% coverage ] ***[!] Built with BASE logging enabled
+[!] Intial Input {"client_data":"","path":"/test2","method":"POST","_bound":4}
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+Transforming
+[!] Built with BASE logging enabled
+[!] Intial Input {"client_data":"","path":"/test1","method":"GET","_bound":11}
+[!] Built with BASE logging enabled
+[!] Intial Input {"client_data":"","path":"/health","method":"GET","_bound":10}
+[!] Built with BASE logging enabled
+[!] Intial Input {"client_data":"","path":"/hello_world","method":"GET","_bound":9}
+[!] Built with BASE logging enabled
+[!] Intial Input {"client_data":"","path":"/test2","method":"GET","_bound":12}
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+Transforming
+Transforming
+Transforming
+Request {
+  url: ConcolicValue {
+    concrete: '/test2',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'POST',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 202,
+  headers: { 'Content-Type': 'text/plain' },
+  body: { data: 'fetching data 2' }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Transforming
+[!] Finished play with PC (not (= method "GET")),(= method "POST"),(not (= path "/test1")),(= path "/test2")
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-oUSXCfuPktYw
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-z1YXdfWJgfCe
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Expanding alternatives []
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[1000D[0K[-] [6 done /0 queued / 4 running / 2 errors / 41% coverage ] ***[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+Transforming
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js depth 1 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/lib/S$/src/symbols.js depth 2 ======
+Transforming
+Transforming
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+[!] ====== ENTERING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js depth 2 ======
+|REGEX ENCODING| /^\/hello_world$/.exec(path) -> (, ) (|0 Fill 3|)
+|REGEX ENCODING| /^\/hello_world$/.exec(path) -> (, ) (|0 Fill 3|)
+[!] Refinements Enabled - Adding checks
+[!] Refinements Enabled - Adding checks
+Request {
+  url: ConcolicValue {
+    concrete: '/test1',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'GET',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 201,
+  headers: { 'Content-Type': 'text/plain' },
+  body: { data: 'Test 1' }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Request {
+  url: ConcolicValue {
+    concrete: '/test2',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'GET',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 202,
+  headers: { 'Content-Type': 'text/html' },
+  body: {
+    data: `<!DOCTYPE HTML><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Alert Test</title></head><html lang='de'><body><h2><script>alert(1);</script>moritz.b@ex.com</h2></body></html>`
+  }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+|REGEX ENCODING| /^\/hello_world$/.exec(path) -> (, ) (|0 Fill 3|)
+|REGEX ENCODING| /^\/hello_world$/.exec(path) -> (, ) (|0 Fill 3|)
+[!] Refinements Enabled - Adding checks
+[!] Refinements Enabled - Adding checks
+Request {
+  url: ConcolicValue {
+    concrete: '/hello_world',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'GET',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 418,
+  headers: { 'Content-Type': 'text/plain' },
+  body: { data: 'I am a teapot with a regex' }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+Request {
+  url: ConcolicValue {
+    concrete: '/health',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  method: ConcolicValue {
+    concrete: 'GET',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  data: ConcolicValue {
+    concrete: '',
+    symbolic: Expr { context: [Context], ast: [Object], _fields: [], checks: [] },
+    _arrayType: undefined
+  },
+  connection: { destroy: [Function: destroy] }
+}
+Response {
+  statusCode: 200,
+  headers: { 'Content-Type': 'text/plain' },
+  body: { data: 'OK' }
+}
+[!] ====== EXITING SCRIPT /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js depth 0 ======
+[!] Finished play with PC (= method "GET"),(str.in_re |0 Fill 0| (str.to_re "/")),(str.in_re |0 Fill 1| (str.to_re "hello")),(str.in_re |0 Fill 2| (str.to_re "_world")),(str.in_re (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)
+           (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                  (str.to_re "_world"))),(= |0 Fill 3| (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)),(=> (str.in_re path
+               (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                      (str.to_re "_world")))
+    (= path (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|))),(= (str.in_re path
+              (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                     (str.to_re "_world")))
+   |IsMatch_/^\\/hello_world$/_0|),(not (str.in_re path
+                (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                       (str.to_re "_world")))),(not (= path "/health")),(= path "/test1")
+[!] Finished play with PC (= method "GET"),(str.in_re |0 Fill 0| (str.to_re "/")),(str.in_re |0 Fill 1| (str.to_re "hello")),(str.in_re |0 Fill 2| (str.to_re "_world")),(str.in_re (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)
+           (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                  (str.to_re "_world"))),(= |0 Fill 3| (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)),(=> (str.in_re path
+               (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                      (str.to_re "_world")))
+    (= path (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|))),(= (str.in_re path
+              (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                     (str.to_re "_world")))
+   |IsMatch_/^\\/hello_world$/_0|),(str.in_re path
+           (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                  (str.to_re "_world")))
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-6Mefjmf2cmrL
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-ehACmMmdtjei
+[!] Finished play with PC (= method "GET"),(str.in_re |0 Fill 0| (str.to_re "/")),(str.in_re |0 Fill 1| (str.to_re "hello")),(str.in_re |0 Fill 2| (str.to_re "_world")),(str.in_re (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)
+           (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                  (str.to_re "_world"))),(= |0 Fill 3| (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)),(=> (str.in_re path
+               (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                      (str.to_re "_world")))
+    (= path (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|))),(= (str.in_re path
+              (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                     (str.to_re "_world")))
+   |IsMatch_/^\\/hello_world$/_0|),(not (str.in_re path
+                (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                       (str.to_re "_world")))),(= path "/health")
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-wxf4ZsE4zrJM
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-Yq33p7gnXS40
+[!] Finished play with PC (= method "GET"),(str.in_re |0 Fill 0| (str.to_re "/")),(str.in_re |0 Fill 1| (str.to_re "hello")),(str.in_re |0 Fill 2| (str.to_re "_world")),(str.in_re (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)
+           (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                  (str.to_re "_world"))),(= |0 Fill 3| (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|)),(=> (str.in_re path
+               (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                      (str.to_re "_world")))
+    (= path (str.++ "" "" |0 Fill 0| |0 Fill 1| |0 Fill 2|))),(= (str.in_re path
+              (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                     (str.to_re "_world")))
+   |IsMatch_/^\\/hello_world$/_0|),(not (str.in_re path
+                (re.++ (re.++ (str.to_re "/") (str.to_re "hello"))
+                       (str.to_re "_world")))),(not (= path "/health")),(not (= path "/test1")),(= path "/test2")
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-SB8TVPqXzskx
+[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-eXaIXm7lhWa3
+[!] Wrote final coverage to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-shXI9VAUWrxX
+Expanding alternatives []
+[1000D[0K[\] [7 done /0 queued / 3 running / 2 errors / 43% coverage ] ***[!] Wrote final output to /var/folders/n8/lc_8v7m56sn7fyxfrknlkx2h0000gn/T/tmp-68594-A0UK5bh0lJNv
+Expanding alternatives []
+[1000D[0K[|] [8 done /0 queued / 2 running / 2 errors / 44% coverage ] ***Expanding alternatives []
+[1000D[0K[/] [9 done /0 queued / 1 running / 2 errors / 45% coverage ] ***Expanding alternatives []
+[1000D[0K[-] [10 done /0 queued / 0 running / 2 errors / 46% coverage ] ***
+[+] 0 {"_bound":0,"client_data":"uh","path":"/test1","method":"POST"} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":34,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":36,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":38,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":48,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":65,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":73,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":91,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":99,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":107,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":124,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":132,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":136,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":159,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":163,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":167,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":170,"_ptr":true},"_fields":[],"checks":[null,null,null]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":248,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":255,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":276,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":280,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":303,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":307,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":311,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":312,"_ptr":true},"_fields":[],"checks":[null,null,null]}] took 1800.102s
+[!] Exit code non-zero
+[!] expoSE replay '/Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js' '{"_bound":0}'
+[+] 1 {"client_data":"\u0000<0>000</0>","path":"/test1","method":"POST","_bound":16} PC: "" took 0.891s
+[!] Exception E: SyntaxError: Unexpected end of JSON input of test data on 
+[!] Exception E: SyntaxError: Unexpected end of JSON input of coverage data on 
+[!] Exit code non-zero
+[!] Error extracting final output - a fatal error must have occured
+[!] expoSE replay '/Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js' '{"client_data":"\u0000<0>000</0>","path":"/test1","method":"POST","_bound":16}'
+[+] 2 {"client_data":"","path":"","method":"","_bound":2} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":34,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":37,"_ptr":true},"_fields":[],"checks":[]}] took 0.897s
+[+] 3 {"client_data":"","path":"","method":"POST","_bound":3} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":34,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":36,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":39,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":42,"_ptr":true},"_fields":[],"checks":[]}] took 0.907s
+[+] 4 {"client_data":"","path":"","method":"GET","_bound":1} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":33,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":41,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":48,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":56,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":60,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":66,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":70,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":74,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":75,"_ptr":true},"_fields":[],"checks":[null,null,null]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":78,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":81,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":84,"_ptr":true},"_fields":[],"checks":[]}] took 1.045s
+[+] 5 {"client_data":"","path":"/test2","method":"POST","_bound":4} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":34,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":36,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":39,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":41,"_ptr":true},"_fields":[],"checks":[]}] took 0.636s
+[+] 6 {"client_data":"","path":"/test1","method":"GET","_bound":11} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":33,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":41,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":48,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":56,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":60,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":66,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":70,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":74,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":75,"_ptr":true},"_fields":[],"checks":[null,null,null]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":78,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":80,"_ptr":true},"_fields":[],"checks":[]}] took 0.754s
+[+] 7 {"client_data":"","path":"/hello_world","method":"GET","_bound":9} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":33,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":41,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":48,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":56,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":60,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":66,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":70,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":74,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":67,"_ptr":true},"_fields":[],"checks":[null,null,null]}] took 0.758s
+[+] 8 {"client_data":"","path":"/health","method":"GET","_bound":10} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":33,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":41,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":48,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":56,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":60,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":66,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":70,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":74,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":75,"_ptr":true},"_fields":[],"checks":[null,null,null]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":77,"_ptr":true},"_fields":[],"checks":[]}] took 0.761s
+[+] 9 {"client_data":"","path":"/test2","method":"GET","_bound":12} PC: [{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":33,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":41,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":48,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":56,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":60,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":66,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":70,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":74,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":75,"_ptr":true},"_fields":[],"checks":[null,null,null]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":78,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":81,"_ptr":true},"_fields":[],"checks":[]},{"context":{"ctx":{"id":1,"_ptr":true}},"ast":{"id":83,"_ptr":true},"_fields":[],"checks":[]}] took 0.763s
+[!] Stats
+[+] General Function Call: 362
+[+] Symbolic Values: 27
+[+] Symbolic Primitives: 27
+[+] Wrapped Constants: 28
+[+] Symbolic Binary: 28
+[+] Modeled Function Call: {"#log":19,"#test":8}
+[+] Regex Encoded: 7
+[+] Regex Which May Need Checks: 7
+[+] Symbolic Unary: 2
+[+] Max Queries (Any): 1
+[+] Max Queries (Succesful): 1
+[+] Regex Checks: 7
+[!] Done
+[+] /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js. Coverage (Term): 95% Coverage (Decisions): NaN% Coverage (LOC): 100% Lines Of Code: 20 -*
+[+] /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js. Coverage (Term): 90% Coverage (Decisions): 58% Coverage (LOC): 100% Lines Of Code: 23 -*
+[+] /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js. Coverage (Term): 85% Coverage (Decisions): 56% Coverage (LOC): 93% Lines Of Code: 27 -*
+[+] /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js. Coverage (Term): 88% Coverage (Decisions): 77% Coverage (LOC): 93% Lines Of Code: 96 -*
+[+] /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js. Coverage (Term): 87% Coverage (Decisions): 57% Coverage (LOC): 88% Lines Of Code: 14 -*
+[+] Total Lines Of Code 180
+[+] Total Coverage: 0.9433962264150944%
+[+] ExpoSE Finished. 10 paths, 2 errors
+[+] Line Coverage for /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/response.js 
+1[42mexport class Response {[49m
+2[42m	constructor(){[49m
+3[42m		this.statusCode = undefined;[49m
+4[42m		this.headers = {};[49m
+5[42m		this.body = {};[49m
+6[42m	}[49m
+7[42m[49m
+8[42m[49m
+9[42m	// model all the possible values of the response[49m
+10[42m	// rewrite all possible function that may be used in the controller[49m
+11[42m[49m
+12[42m[49m
+13[42m	writeHead(statusCode){[49m
+14[42m		this.statusCode = statusCode;[49m
+15[42m	}[49m
+16[42m[49m
+17[42m	end(data){[49m
+18[42m		this.body["data"] = data;[49m
+19[42m	}[49m
+20[42m[49m
+21[42m	setHeader(header, value){[49m
+22[42m		this.headers[header] = value;[49m
+23[42m	}[49m
+24[42m[49m
+25[42m}[49m
+[+] Line Coverage for /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_client.js 
+1[42mimport {Response} from "../response.js";[49m
+2[42mimport {Request} from "../request.js";[49m
+3[42mconst S$ = require("S$");[49m
+4[42m[49m
+5[42m[49m
+6[42mimport {onRequest} from "./basic_server_server_controller.js";[49m
+7[42m[49m
+8[42mfunction runTest(){[49m
+9[42m	let data = S$.symbol("client_data", "uh");[49m
+10[42m	let request = new Request([49m
+11[42m		S$.symbol("path", "/test1"),[49m
+12[42m		S$.symbol("method", "POST"),[49m
+13[42m		data);[49m
+14[42m	const response = new Response();[49m
+15[42m	let resp = onRequest(request,response);[49m
+16[42m	console.log(request);[49m
+17[42m	console.log(resp);[49m
+18[42m}[49m
+19[42m[49m
+20[42mrunTest();[49m
+[+] Line Coverage for /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_service.js 
+1[42mclass BasicService {[49m
+2[42m	constructor(){}[49m
+3[42m[49m
+4[42m	fetchData(data){[49m
+5[42m		if (/^a?b?c?$/.test(data)) {[49m
+6[42m			return "fetching data 1";[49m
+7[41m		}[49m
+8[42m		return "fetching data 2";[49m
+9[42m	}[49m
+10[42m[49m
+11[42m}[49m
+12[42m[49m
+13[42mmodule.exports = {BasicService};[49m
+[+] Line Coverage for /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/request.js 
+1[42mexport class Request {[49m
+2[42m	constructor(url, method, data){[49m
+3[42m		this.url = url;[49m
+4[42m		this.method = method;[49m
+5[42m		this.data = data;[49m
+6[42m		this.connection = {[49m
+7[42m			destroy: function(){[49m
+8[41m				console.log("Connection destroyed");[49m
+9[42m			}[49m
+10[42m		};[49m
+11[42m[49m
+12[42m	}[49m
+13[42m[49m
+14[42m[49m
+15[42m	// model all the possible values of the response[49m
+16[42m	// rewrite all possible function that may be used in the controller[49m
+17[42m[49m
+18[42m	on(event, callback) {[49m
+19[42m		switch (event) {[49m
+20[42m		case "data":[49m
+21[42m			callback(this.data);[49m
+22[42m			break;[49m
+23[42m		case "end":[49m
+24[42m			callback();[49m
+25[42m			break;[49m
+26[42m		}[49m
+27[42m	}[49m
+28[42m}[49m
+[+] Line Coverage for /Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/basic/basic_server_server_controller.js 
+1[42mconst S$ = require("S$");[49m
+2[42mconst service = require("./basic_server_service.js");[49m
+3[42m[49m
+4[42mlet basicService = new service.BasicService();[49m
+5[42m[49m
+6[42m[49m
+7[42mfunction sendPostResponse(request,response){[49m
+8[42m	switch (request.url) {[49m
+9[42m	case "/test1":[49m
+10[42m		// eslint-disable-next-line no-case-declarations[49m
+11[42m		let queryData;[49m
+12[42m		request.on("data", function(data) {[49m
+13[42m			queryData = data;[49m
+14[42m[49m
+15[42m		});[49m
+16[42m		request.on("end", function() {[49m
+17[42m			let testString = /[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0 -9]*/;[49m
+18[42m[49m
+19[42m			let scriptString = /<[A-Za-z0-9]+>[A-Za-z0-9]+<\/[A-Za-z0-9]>/;[49m
+20[42m[49m
+21[42m			//[49m
+22[42m			console.log(`queryData: ${queryData}`);[49m
+23[42m			S$.assert(!scriptString.test(queryData));[49m
+24[42m[49m
+25[42m			if (testString.test(queryData)) {[49m
+26[42m				// has to be here, otherwise the test will fail and the program will terminate[49m
+27[41m				S$.assert(testString.test(queryData));[49m
+28[42m[49m
+29[41m				response.setHeader("Content-Type", "text/html");[49m
+30[41m				response.writeHead(201);[49m
+31[41m				response.end(`<!DOCTYPE HTML><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Alert Test</title></head><html lang='de'><body><h2>Email: ${queryData}</h2></body></html>`);[49m
+32[42m			}[49m
+33[42m			else{[49m
+34[42m				response.writeHead(401);[49m
+35[42m				response.end("Wrong Data Format");[49m
+36[42m			}[49m
+37[42m		});[49m
+38[42m		break;[49m
+39[42m	case "/test2":[49m
+40[42m		response.setHeader("Content-Type", "text/plain");[49m
+41[42m		response.writeHead(202);[49m
+42[42m		response.end(basicService.fetchData("blub"));[49m
+43[42m		break;[49m
+44[42m	default:[49m
+45[42m		response.writeHead(401);[49m
+46[42m		response.end("Invalid POST request");[49m
+47[42m	}[49m
+48[42m}[49m
+49[42mfunction sendGetResponse(request,response){[49m
+50[42m	if (/^\/hello_world$/.test(request.url)){[49m
+51[42m		response.setHeader("Content-Type", "text/plain");[49m
+52[42m		response.writeHead(418);[49m
+53[42m		response.end("I am a teapot with a regex");[49m
+54[42m[49m
+55[42m	}[49m
+56[42m	else {[49m
+57[42m		switch (request.url) {[49m
+58[42m		case "/health":[49m
+59[42m			response.setHeader("Content-Type", "text/plain");[49m
+60[42m			response.writeHead(200);[49m
+61[42m			response.end("OK");[49m
+62[42m			break;[49m
+63[42m		case "/test1":[49m
+64[42m			response.setHeader("Content-Type", "text/plain");[49m
+65[42m			response.writeHead(201);[49m
+66[42m			response.end("Test 1");[49m
+67[42m			break;[49m
+68[42m		case "/test2":[49m
+69[42m			response.setHeader("Content-Type", "text/html");[49m
+70[42m			response.writeHead(202);[49m
+71[42m			response.end("<!DOCTYPE HTML><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><title>Alert Test</title></head><html lang='de'><body><h2><script>alert(1);</script>moritz.b@ex.com</h2></body></html>");[49m
+72[42m			break;[49m
+73[42m		default:[49m
+74[42m			response.setHeader("Content-Type", "text/plain");[49m
+75[42m			response.writeHead(403);[49m
+76[42m			response.end("Invalid GET request");[49m
+77[42m		}[49m
+78[42m	}[49m
+79[42m}[49m
+80[42m[49m
+81[42mfunction onRequest(request,response){[49m
+82[42m	if (request.method=== "GET") {[49m
+83[42m		sendGetResponse(request, response);[49m
+84[42m	}[49m
+85[42m	else if (request.method === "POST"){[49m
+86[42m		sendPostResponse(request, response);[49m
+87[42m	}[49m
+88[42m	else{[49m
+89[42m		response.writeHead(404);[49m
+90[42m		response.end("Not Found");[49m
+91[42m	}[49m
+92[42m	return response;[49m
+93[42m}[49m
+94[42m[49m
+95[42m[49m
+96[42mmodule.exports = {onRequest};[49m

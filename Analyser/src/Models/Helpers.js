@@ -34,12 +34,12 @@ export default function(state, ctx, model) {
 
 			let [result, thrown] = runMethod(f, base, args, concretize);
 
-			Log.logMid(`Symbolic Testing ${f.name} with base ${ObjectHelper.asString(base)} and ${ObjectHelper.asString(args)} and initial result ${ObjectHelper.asString(result)}`);
+			Log.log(`Symbolic Testing ${f.name} with base ${ObjectHelper.asString(base)} and ${ObjectHelper.asString(args)} and initial result ${ObjectHelper.asString(result)}`);
 
 			if (!featureDisabled && condition(base, args)) {
 				result = hook(base, args, result);
 			}
-
+			
 			Log.logMid(`Result: ${"" + result} Thrown: ${"" + thrown}`);
 
 			if (thrown) {
@@ -56,7 +56,7 @@ export default function(state, ctx, model) {
 			base = state.getConcrete(base);
 
 			if (isNative(base)) {
-				Log.logMid('Concretized Fn Model Call');
+				Log.logMid("Concretized Fn Model Call");
 				const concretized = state.concretizeCall(f, base, args, false);
 				base = concretized.base;
 				args = concretized.args;
@@ -67,7 +67,7 @@ export default function(state, ctx, model) {
 	}
 
 	function coerceToString(symbol) {
-    return state.ToString(symbol);	
+		return state.ToString(symbol);	
 	}
 
 	function NoOp(f) {
@@ -146,8 +146,8 @@ export default function(state, ctx, model) {
 	}
 
 	return {
-    mkFunctionName: mkFunctionName,
-    mkIndexSymbol: mkIndexSymbol,
+		mkFunctionName: mkFunctionName,
+		mkIndexSymbol: mkIndexSymbol,
 		runMethod: runMethod,
 		symbolicHook: symbolicHook,
 		ConcretizeIfNative: ConcretizeIfNative,

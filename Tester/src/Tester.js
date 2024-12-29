@@ -8,24 +8,25 @@ const EXPOSE_TEST_SCRIPT = "./expoSE";
 
 class Tester {
 
-	constructor(file) {
+	constructor(file, iteration) {
 		this.file = file;
+		this.iteration = iteration;
 		this.out = "";
 	}
 
 	build(done) {
 
+
+		console.log(this.file);
 		let env = process.env;
 		env.EXPOSE_EXPECTED_PC = this.file.expectPaths;
 
-		let prc = spawn(EXPOSE_TEST_SCRIPT, [this.file.path], {
+		let prc = spawn(EXPOSE_TEST_SCRIPT, [this.file], {
 			env: env
 		});
 
 		prc.stdout.setEncoding("utf8");
-		prc.stderr.setEncoding("utf8");
 		prc.stdout.on("data", data => this.out += data.toString());
-		prc.stderr.on("data", data => this.out += data.toString());
 
 		let startTime = Date.now();
 
@@ -38,7 +39,7 @@ class Tester {
 
 		function queueTimeout() {
 			longRunningMessage = setTimeout(() => {
-				console.log(`\r${ref.file.path} has taken ${(Date.now() - startTime) / 1000}s to run`);
+				console.log(`\r${ref.file} #${ref.iteration} has taken ${(Date.now() - startTime) / 1000}s to run`);
 				queueTimeout();
 			}, TIME_WARNING * SECOND);
 		}
