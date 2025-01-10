@@ -5,14 +5,14 @@ import NotAnErrorException from "../NotAnErrorException";
 import { isNative } from "../Utilities/IsNative";
 import { ConcolicValue } from "../Values/WrappedValue";
 
-import Helpers from './Helpers';
-import MathModels from './MathModels';
-import ArrayModels from './ArrayModels';
-import StringModels from './StringModels';
-import FnModels from './FnModels';
-import RegexModels from './RegexModels';
-import DOMModels from './DOMModels';
-import JSONModels from './JSONModels';
+import Helpers from "./Helpers";
+import MathModels from "./MathModels";
+import ArrayModels from "./ArrayModels";
+import StringModels from "./StringModels";
+import FnModels from "./FnModels";
+import RegexModels from "./RegexModels";
+import DOMModels from "./DOMModels";
+import JSONModels from "./JSONModels";
 
 function Model() {
 	this._models = [];
@@ -45,8 +45,8 @@ function BuildModels(state) {
 	RegexModels(state, ctx, model, helpers);
 	ArrayModels(state, ctx, model, helpers);
 	FnModels(state, ctx, model, helpers);
-  DOMModels(state, ctx, model, helpers);
-  JSONModels(state, ctx, model, helpers);
+  	DOMModels(state, ctx, model, helpers);
+	JSONModels(state, ctx, model, helpers);
 
 	/**
 	 * Models for methods on Object

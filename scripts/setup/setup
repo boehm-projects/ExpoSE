@@ -15,9 +15,9 @@ echo "Building Analyser"
 echo "Copying Analyser Dependencies to Browser"
 cp -r ./Analyser/node_modules/* ./Browser/node_modules/
 
-#touch ~/.bashrc
+touch ~/.zshrc
 
-#echo "Installing into PATH"
-#./scripts/setup/install_bashprofile
+echo "Installing into PATH"
+./scripts/setup/install_bashprofile
 
 exit 0

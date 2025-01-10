@@ -17,7 +17,6 @@ class Center {
 	}
 
 	start(file, baseInput) {
-
 		this._lastid = 0;
 		this._done = [];
 		this._errors = 0;
@@ -111,6 +110,7 @@ class Center {
 	}
 
 	_expandAlternatives(file, alternatives, testCoverage) {
+		console.log("Expanding alternatives", alternatives);
 		alternatives.forEach(alt => {
 			this._strategy.add({
 				id: this._nextID(),

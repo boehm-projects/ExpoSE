@@ -41,12 +41,12 @@ function timeFrom(envArg, defaultVal) {
 export default {
 	maxConcurrent: maxConcurrent(), //max number of tests to run concurrently
 	maxTime: timeFrom("EXPOSE_MAX_TIME", "2h"),
-	testMaxTime: timeFrom("EXPOSE_TEST_TIMEOUT", "40m"),
+	testMaxTime: timeFrom("EXPOSE_TEST_TIMEOUT", "30m"),
 	testStrategy: getArgument("EXPOSE_TEST_STRATEGY", "string", "default"),
-	jsonOut: getArgument("EXPOSE_JSON_PATH", "string", undefined), //By default ExpoSE does not generate JSON out
-	printPaths: getArgument("EXPOSE_PRINT_PATHS", "number", false), //By default do not print paths to stdout
-	printDeltaCoverage: getArgument("EXPOSE_PRINT_COVERAGE", "number", false),
-	printPathCondition: getArgument("EXPOSE_PRINT_PC", "number", false),
-	perCaseCoverage: getArgument("EXPOSE_CASE_COVERAGE", "number", false), /* Prints coverage information on the finished path */
+	jsonOut: getArgument("EXPOSE_JSON_PATH", "string", ""), //By default ExpoSE does not generate JSON out
+	printPaths: getArgument("EXPOSE_PRINT_PATHS", "number", true), //By default do not print paths to stdout
+	printDeltaCoverage: getArgument("EXPOSE_PRINT_COVERAGE", "number", true),
+	printPathCondition: getArgument("EXPOSE_PRINT_PC", "number", true),
+	perCaseCoverage: getArgument("EXPOSE_CASE_COVERAGE", "number", true), /* Prints coverage information on the finished path */
 	analyseScript: getArgument("EXPOSE_PLAY_SCRIPT", "string", "./scripts/play")
 };

@@ -24,7 +24,7 @@ export default function(state, ctx, model, helpers) {
 				}
 				return result;
 			}
-		}
+		};
 	}
 
 	function DoesntMatch(l, r) {
@@ -56,8 +56,8 @@ export default function(state, ctx, model, helpers) {
 		Log.logMid("Captures Enabled - Adding Implications");
 
 		const implies = ctx.mkImplies(
-				ctx.mkSeqInRe(string_s, regex.ast),
-				ctx.mkEq(string_s, regex.implier)
+			ctx.mkSeqInRe(string_s, regex.ast),
+			ctx.mkEq(string_s, regex.implier)
 		);
 
 		//Mock the symbolic conditional if (regex.test(/.../) then regex.match => true)
@@ -81,7 +81,7 @@ export default function(state, ctx, model, helpers) {
 
 		//TODO: This is a workaround as calling asConstant on is_match_s doesn't work
 		//Remove when we get a reply from the Z3 guys
-		const isMatch =  ctx.mkBoolVar('IsMatch_' + real + '_' + isMatchCount++);
+		const isMatch =  ctx.mkBoolVar("IsMatch_" + real + "_" + isMatchCount++);
 		state.pushCondition(ctx.mkEq(is_match_s, isMatch), true);
 
 		function CheckCorrect(model) {
@@ -91,7 +91,6 @@ export default function(state, ctx, model, helpers) {
 
 				const real_match = real.exec(model.eval(string_s).asConstant(model));
 				const sym_match = regex.captures.map(cap => model.eval(cap).asConstant(model));
-
 				Log.logMid(`Regex sanity check ${stringify(real_match)} vs ${stringify(sym_match)}`);
 				const is_correct = real_match && !Exists(real_match, sym_match, DoesntMatch);
 
@@ -171,25 +170,25 @@ export default function(state, ctx, model, helpers) {
 
 		if (regex.sticky || regex.global) {
 			//Cut at regex.lastIndex
-			state.stats.seen('Sticky (RegexBuiltinExec)');
+			state.stats.seen("Sticky (RegexBuiltinExec)");
 			string = model.get(String.prototype.substring).call(string, currentLastIndex);
-			if (!regex.source[0] != '^') {
+			if (!regex.source[0] != "^") {
 				Log.log("In Sticky Mode We Insert ^");
-				regex = new RegExp('^' + regex.source, regex.flags);
+				regex = new RegExp("^" + regex.source, regex.flags);
 			}
 		}
 
-    state.stats.seen('Regex Encoded');
+		state.stats.seen("Regex Encoded");
 		const regexEncoded = Z3.Regex(ctx, regex);
 		const is_match_s = ctx.mkSeqInRe(state.asSymbolic(string), regexEncoded.ast);
 
-    console.log(`|REGEX ENCODING| ${regex}.exec(${state.asSymbolic(string).toString()}) -> (${regexEncoded.anchoredStart ? regexEncoded.anchoredStart.toString() : ''}, ${regexEncoded.anchoredEnd ? regexEncoded.anchoredEnd.toString() : ''}) (${regexEncoded.captures.reduce((last, capture, idx) => last + (idx > 0 ? ',' : '') + capture.toString(), '')})`);
+		console.log(`|REGEX ENCODING| ${regex}.exec(${state.asSymbolic(string).toString()}) -> (${regexEncoded.anchoredStart ? regexEncoded.anchoredStart.toString() : ""}, ${regexEncoded.anchoredEnd ? regexEncoded.anchoredEnd.toString() : ""}) (${regexEncoded.captures.reduce((last, capture, idx) => last + (idx > 0 ? "," : "") + capture.toString(), "")})`);
 
 		EnableCaptures(regexEncoded, regex, state.asSymbolic(string));
 		is_match_s.checks = BuildRefinements(regexEncoded, regex, state.asSymbolic(string), is_match_s);
 
 		if (Config.capturesEnabled && (regex.sticky || regex.global)) {
-			Log.log('Captures enabled - symbolic lastIndex enabled');
+			Log.log("Captures enabled - symbolic lastIndex enabled");
 
 			regexEncoded.startIndex = ctx.mkAdd(
 				state.asSymbolic(currentLastIndex),
@@ -209,12 +208,12 @@ export default function(state, ctx, model, helpers) {
 		return {
 			result: new ConcolicValue(is_match_c, is_match_s),
 			encodedRegex: regexEncoded,
-		}
+		};
 	}
 
 	function RegexpBuiltinExec(regex, string) {
 
-    Log.logMid("RegexpExec Model");	
+		Log.logMid("RegexpExec Model");	
 	
 		//Preserve the lastIndex property
 		let lastIndex = regex.lastIndex;
@@ -333,9 +332,9 @@ export default function(state, ctx, model, helpers) {
 				
 				results.push(wordsBeforeSplit);
 
-				lastIndex = state.binary('+',
+				lastIndex = state.binary("+",
 					lastIndex,
-					state.binary('+', next.index, matchSize)
+					state.binary("+", next.index, matchSize)
 				);
 
 			} else {
@@ -357,7 +356,7 @@ export default function(state, ctx, model, helpers) {
 		//Remove g and y from regex
 		const rewrittenRe = new RegExp(regex.source, regex.flags.replace(/g/g, "") + "");
 
-		if (regex.flags.includes('g')) {
+		if (regex.flags.includes("g")) {
 
 			let replaced = true;
 			
@@ -390,12 +389,12 @@ export default function(state, ctx, model, helpers) {
 
 				//Collect the parts before and after the match
 				let lhs = model.get(String.prototype.substring).call(string, 0, next.index);
-				let rhs = model.get(String.prototype.substring).call(string, state.binary('+', next.index, matchSize));
+				let rhs = model.get(String.prototype.substring).call(string, state.binary("+", next.index, matchSize));
 
 				if (typeof(state.getConcrete(replacementString)) === "function") {
-					string = state.binary('+',
+					string = state.binary("+",
 						lhs,
-						state.binary('+',
+						state.binary("+",
 							coerceToString(replacementString.apply(null, next)),
 							rhs
 						)
@@ -406,7 +405,7 @@ export default function(state, ctx, model, helpers) {
 
 					//Simple (NOT STANDARDS-COMPLAINT!!) substitution for replacement strings with things like $1, $2 in them
 					if (state.getConcrete(replacementString).search(/\$[0-9]/) != -1) {
-						Log.log('WARN: no support for symbolic replacement strings');
+						Log.log("WARN: no support for symbolic replacement strings");
 						let remaining = state.getConcrete(replacementString);
 						finalString = "";
 
@@ -415,16 +414,16 @@ export default function(state, ctx, model, helpers) {
 						while ((toreplace = /\$[0-9]/.exec(remaining))) {
 							const before = remaining.substr(0, toreplace.index);
 							const replaced = next[toreplace[0][1]];
-							finalString = state.binary('+', finalString, state.binary('+', before, replaced));
+							finalString = state.binary("+", finalString, state.binary("+", before, replaced));
 							remaining = remaining.substr(toreplace.index + toreplace[0].length);
 						}
 
-						finalString = state.binary('+', finalString, remaining);
+						finalString = state.binary("+", finalString, remaining);
 					} else { //Short circuit if there are no substitution strings
 						finalString = replacementString;
 					}
 
-					string = state.binary('+', lhs, state.binary('+', finalString, rhs));
+					string = state.binary("+", lhs, state.binary("+", finalString, rhs));
 				}
 
 				return {
@@ -481,11 +480,11 @@ export default function(state, ctx, model, helpers) {
 	));
 
 
-  /**
+	/**
    * Occasionally (Thanks James....) it appears developers may resolve the Symbol for the match method rather than use the API. Most interpreters use the same instance of the method for all constructs so we can add a model by creating a new RegExp, extracting the default match symbol and adding that to the models.
    */
 
-  const Template = /DEFAULT/;
+	const Template = /DEFAULT/;
 
 	model.add(Template[Symbol.search], symbolicHookRe(
 		Template[Symbol.search],

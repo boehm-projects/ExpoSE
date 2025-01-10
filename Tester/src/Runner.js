@@ -3,20 +3,23 @@
 
 
 import Tester from "./Tester";
-import Walker from "./Walker";
+import * as http from "node:http";
 
 class Runner {
 
-	constructor(maxConcurrent) {
+	constructor(maxConcurrent, iterations, file){
+		this.file = file;
 		this.cbs = [];
+		this._iteration = 0;
+		this._total = iterations;
 		this._maxConcurrent = maxConcurrent;
 	}
 
-	start(dir, fn) {
+	start() {
 		this._errors = 0;
 		this._running = 0;
 		this._times = [];
-		this.walker = new Walker(dir, fn).done(files => this.startTesting(files)).start();
+		this.startTesting();
 		return this;
 	}
 
@@ -25,25 +28,23 @@ class Runner {
 		return this;
 	}
 
-	startTesting(files) {
-		this.files = files;
-		this.filesTotal = files.length;
+	startTesting() {
+
 		this.done = 0;
 
-		this._printStatus();
 
 		//Start the tests
-		for (let i = 0; i < this._maxConcurrent; i++) {
+		if (this._running < this._maxConcurrent){
 			this.startNext();
 		}
 	}
 
-	/**
-     * Start any remaining tests
-     */
 	startNext() {
-		if (this.files.length) {
-			this.testFile(this.files.pop());
+		if (this._iteration < this._total) {
+			while(this._running < this._maxConcurrent){
+				this._iteration++;
+				this.testFile(this.file);
+			}
 		}
 	}
 
@@ -53,7 +54,6 @@ class Runner {
 
 		//Start any remaining queued
 		this.startNext();
-		this._printStatus();
 
 		//If finished print output
 		if (this._running === 0) {
@@ -62,7 +62,7 @@ class Runner {
 	}
 
 	_printStatus() {
-		process.stdout.write("\r*** [" + this.done + "/" + this.filesTotal +"] [" + this._running + " running] [" + this._errors + " errors] ***");
+		process.stdout.write("\r*** [" + this.done + "/" + this._total +"] [" + this._running + " running] [" + this._errors + " errors] ***\n");
 	}
 
 	finishedTesting() {
@@ -82,9 +82,9 @@ class Runner {
 
 	_testFileDone(test, code, time, file) {
 		this.done++;
-
+		this._printStatus();
 		if (code !== file.expectErrors) {
-			process.stderr.write("\n" + file.path + " failed with errors (" + code + "). Printing output\n");
+			process.stderr.write("\n" + file + " failed with errors (" + code + "). Printing output\n");
 			process.stderr.write(test.out + "\n");
 			this._errors++;
 		}
@@ -96,10 +96,13 @@ class Runner {
 
 	testFile(file) {
 		this._running++;
-		let test = new Tester(file);
 		this._printStatus();
+
+		let test = new Tester(file, this._iteration);
 		test.build((code, time) => this._testFileDone(test, code, time, file));
 	}
+
+
 }
 
 export default Runner;
