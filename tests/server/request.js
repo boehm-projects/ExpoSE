@@ -1,8 +1,9 @@
 export class Request {
-	constructor(url, method, data){
+	constructor(url, method, data, params){
 		this.url = url;
 		this.method = method;
 		this.data = data;
+		this.params = params
 		this.connection = {
 			destroy: function(){
 				console.log("Connection destroyed");

@@ -20,8 +20,7 @@ class Tester {
 		console.log(this.file);
 		let env = process.env;
 		env.EXPOSE_EXPECTED_PC = this.file.expectPaths;
-
-		let prc = spawn(EXPOSE_TEST_SCRIPT, [this.file], {
+		let prc = spawn(EXPOSE_TEST_SCRIPT, [this.file.path], {
 			env: env
 		});
 
@@ -39,7 +38,7 @@ class Tester {
 
 		function queueTimeout() {
 			longRunningMessage = setTimeout(() => {
-				console.log(`\r${ref.file} #${ref.iteration} has taken ${(Date.now() - startTime) / 1000}s to run`);
+				console.log(`\r${ref.file.path} #${ref.iteration} has taken ${(Date.now() - startTime) / 1000}s to run`);
 				queueTimeout();
 			}, TIME_WARNING * SECOND);
 		}

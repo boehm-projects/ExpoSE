@@ -7,7 +7,7 @@ import * as http from "node:http";
 
 class Runner {
 
-	constructor(maxConcurrent, iterations, file) {
+	constructor(maxConcurrent, iterations, file){
 		this.file = file;
 		this.cbs = [];
 		this._iteration = 0;
@@ -83,14 +83,13 @@ class Runner {
 	_testFileDone(test, code, time, file) {
 		this.done++;
 		this._printStatus();
-
 		if (code !== file.expectErrors) {
 			process.stderr.write("\n" + file + " failed with errors (" + code + "). Printing output\n");
 			process.stderr.write(test.out + "\n");
 			this._errors++;
 		}
 
-		this._times.push(`${file} took ${time / 1000}s`);
+		this._times.push(`${file.path} took ${time / 1000}s`);
 
 		this.postTest();
 	}

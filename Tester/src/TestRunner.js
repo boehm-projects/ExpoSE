@@ -22,12 +22,18 @@ function getArgument(name, fallback=null) {
 
 
 const concurrent = parseInt(getArgument("--concurrent", 4));
+const expectedErrors = parseInt(getArgument("--maxErrors", 4));
 
 const iterations = parseInt(getArgument("--iterations", 10));
-const file = getArgument("--file");
+const filesPath = getArgument("--file");
 if (file === "No optional field") {
 	process.exit(1);
 }
-console.log(`Launching stress test for file ${file} with max concurrent of ${concurrent} for ${iterations} iterations` );
+
+const file = {
+	path: filesPath,
+	expectErrors: expectedErrors
+} 
+console.log(`Launching stress test for file ${file.path} with max concurrent of ${concurrent} for ${iterations} iterations` );
 
 new Runner(concurrent, iterations, file).start();
