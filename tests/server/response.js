@@ -10,8 +10,14 @@ export class Response {
 	// rewrite all possible function that may be used in the controller
 
 
-	writeHead(statusCode){
+	writeHead(statusCode, headerObject){
 		this.statusCode = statusCode;
+		if (headerObject){
+			for (const [key, value] of Object.entries(headerObject))
+			{
+				this.setHeader(key, value)
+			}
+		}
 	}
 
 	end(data){
@@ -21,5 +27,7 @@ export class Response {
 	setHeader(header, value){
 		this.headers[header] = value;
 	}
+
+	
 
 }

@@ -1,8 +1,6 @@
 function getRequest(req, res) {
-    console.log('GET request received')
     res.writeHead(200, { 'Content-Type': 'application/json' })
     var response = { "response": "This is GET method." }
-    console.log(response)
     res.end(response)
 }
 
@@ -12,44 +10,58 @@ function getById(req, res) {
         var response = { "response": "No valid id" }
     }
     else {
-        console.log('get /:id request received')
         res.writeHead(200, { 'content-type': 'application/json' })
         var response = { "response": "Get method with id = " + req.params.id + "." }
 
     }
-    console.log(response)
+    res.end(response)
+}
+
+
+function test(req, res) {
+    if (req.params.id === undefined || typeof parseInt(req.params.id) !== "number") {
+        res.writeHead(400, { 'content-type': 'application/json' })
+        var response = { "response": "No valid id" }
+    }
+    const uuidRegex = /^[a-fA-F0-9]{8}$/
+    if (req.params.uuid === undefined || !uuidRegex.test(req.params.uuid)) {
+        res.writeHead(400, { 'content-type': 'application/json' })
+        var response = { "response": "No valid uuid" }
+    }
+    else {
+        res.writeHead(200, { 'content-type': 'application/json' })
+        var response = { "response": "POST method with id = " + req.params.id + " and UUID = " + req.params.uuid}
+    }
     res.end(response)
 }
 
 function postRequest(req, res) {
-    console.log('POST request received')
     res.writeHead(200, { 'Content-Type': 'application/json' })
     var response = { "response": "This is POST method." }
-    console.log(response)
     res.end(response)
 }
 
 function putRequest(req, res) {
-    console.log('PUT request received')
     res.writeHead(200, { 'Content-Type': 'application/json' })
     var response = { "response": "This is PUT method." }
-    console.log(response)
     res.end(response)
 }
 
 function deleteRequest(req, res) {
-    console.log('DELETE request received')
     res.writeHead(200, { 'Content-Type': 'application/json' })
     var response = { "response": "This is DELETE method." }
-    console.log(response)
     res.end(response)
 }
+
+
+const requestFun = [deleteRequest, putRequest, postRequest, getById, getRequest];
 
 module.exports = {
     deleteRequest,
     putRequest,
     postRequest,
     getById,
-    getRequest
-
+    getRequest,
+    test,
+    requestFun
 }

@@ -1,18 +1,18 @@
 
-var service = require('./express_service')
+var service = require('./express_controller')
 var express = require('../express_model/express')
-var router = require('../express_model/router')()
+
+var router = express.createRouter()
 
 
-
-router.get('/', service.getRequest )
+router.get('/get', service.getRequest )
 
 router.get('/:id', service.getById )
 
-router.post('/', service.postRequest  )
+router.post('/post', service.postRequest  )
 
-router.put('/', service.putRequest )
+router.put('/put', service.putRequest )
 
-router.delete('/', service.deleteRequest )
+router.delete('/delete', service.deleteRequest )
 
-module.exports = router;
+export default router;
