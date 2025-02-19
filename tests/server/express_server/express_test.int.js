@@ -12,7 +12,13 @@ app.use(function(req,res){
 })
 
 function getRequest(req, res) {
-    console.log('GET request received')
+    if(req.params.id ){    
+        console.log('ID request received, ' + req.params.id)
+    } 
+    else{
+        console.log('GET request received')
+    }
+   
     res.writeHead(200, { 'Content-Type': 'application/json' })
     var response = { "response": "This is GET method." }
     console.log(response)
@@ -28,7 +34,7 @@ function postRequest(req, res) {
 
 
 
-router.get('/sub',
+router.get('/sub/:id',
     getRequest)
 router.post('/sub',
     postRequest)

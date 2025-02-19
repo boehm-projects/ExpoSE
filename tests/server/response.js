@@ -28,6 +28,10 @@ export class Response {
 		this.headers[header] = value;
 	}
 
+	send(data){
+		this.body["data"] = data;
+	}
+
 	
 
 }

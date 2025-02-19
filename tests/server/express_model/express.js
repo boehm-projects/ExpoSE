@@ -1,6 +1,7 @@
 const { Response } = require("../response");
 const { default: HttpMethods } = require("./http_methods.enum");
 
+const S$ = require("S$");
 
 
 
@@ -22,23 +23,80 @@ class Application {
     }
 
     listen(key, callbackparam, req) {
-        let res = new Response() 
-        this.handleStack(req, res) 
+        var res = new Response()
+        console.log(req)
+        this.handleStack(req, res)
+
         return res
     }
     set(key, value) {
         this.dataMap[key] = value
     }
 
-    get(key) {
-        return this.dataMap[key]
+    get(key, callback) {
+        if (callback) {
+            let objectBuilder = {}
+            let routerObjectValue = {
+                "path": key,
+            }
+            objectBuilder["route"] = routerObjectValue
+            objectBuilder["path"] = key
+            objectBuilder["handle"] = callback
+            objectBuilder["method"] = "GET";
+            console.log("we made it here")
+            this.stack.push(objectBuilder)
+        }
+        else {
+            return this.dataMap[key]
+        }
+
+    }
+    put(key, callback) {
+        let objectBuilder = {}
+        let routerObjectValue = {
+            "path": key,
+        }
+        objectBuilder["route"] = routerObjectValue
+        objectBuilder["path"] = key
+        objectBuilder["handle"] = callback
+        objectBuilder["method"] = "PUT";
+        this.stack.push(objectBuilder)
     }
 
+    delete(key, callback) {
+        let objectBuilder = {}
+        let routerObjectValue = {
+            "path": key,
+        }
+        objectBuilder["route"] = routerObjectValue
+        objectBuilder["path"] = key
+        objectBuilder["handle"] = callback
+        objectBuilder["method"] = "DELETE";
+        this.stack.push(objectBuilder)
+    }
+    post(key, callback) {
+        let objectBuilder = {}
+        let routerObjectValue = {
+            "path": key,
+        }
+        objectBuilder["route"] = routerObjectValue
+        objectBuilder["path"] = key
+        objectBuilder["handle"] = callback
+        objectBuilder["method"] = "POST";
+        this.stack.push(objectBuilder)
+
+    }
+    next() {
+        return
+    }
 
 
     use() {
         if (arguments.length > 1 && arguments[1] instanceof Router) {
-            
+            let basePath = arguments[0]
+            if(basePath === "/"){
+                basePath = ""
+            }
             for (const [key, value] of Object.entries(arguments[1].routingObject)) {
                 for (const [routekey, routevalue] of Object.entries(value.methods)) {
                     // add path of routerobject to route on the stack
@@ -47,16 +105,16 @@ class Application {
                         "path": key,
                     }
                     objectBuilder["route"] = deepMerge(routerObjectValue, value)
-                    objectBuilder["path"] = arguments[0];
+                    objectBuilder["path"] = basePath  + key;
                     objectBuilder["handle"] = value[routekey];
                     objectBuilder["method"] = routekey;
                     this.stack.push(objectBuilder)
-                } 
+                }
             }
         }
         else if (typeof arguments[0] == "string" && arguments.length === 2) {
             let objectBuilder = {}
-            objectBuilder["path"] = arguments[0];
+            objectBuilder["path"] = "/";
             objectBuilder["handle"] = arguments[1];
             objectBuilder["method"] = "use";
             objectBuilder["route"] = null;
@@ -66,7 +124,7 @@ class Application {
 
             for (var i = 1; i < arguments.length; i++) {
                 let objectBuilder = {}
-                objectBuilder["path"] = arguments[0];
+                objectBuilder["path"] = "/";
                 objectBuilder["handle"] = arguments[i];
                 objectBuilder["method"] = "use";
                 objectBuilder["route"] = null;
@@ -85,48 +143,67 @@ class Application {
         }
     }
 
-    handleStack(req, res) { 
-        if (req.url === undefined || !HttpMethods.includes(req.method)) {
+    handleStack(req, res) {
+        if ((req.url || req.method) === undefined || !HttpMethods.includes(req.method)) {
             res.setHeader("Content-Type", "text/plain");
-            res.writeHead(403);
-            res.end("Invalid request");
+            res.writeHead(400);
+            res.end("Invalid request. Missing URL or Method");
             return res
         }
         let foundCorrectPath = false
 
-
-        
-
         this.stack.forEach(
             middleWare => {
-                if (middleWare.method === "use")
-                {
-                    middleWare.handle(req,res) 
+                if (middleWare.method === "use") {
+                    middleWare.handle(req, res, this.next)
                 }
-                if(middleWare.method === req.method ){
+
+                if (middleWare.method == req.method && foundCorrectPath === false) {
+
+                    let path = middleWare.path
+
                     // are there any path attributes? e.g. /:id 
-                    var template = middleWare.route.path;
-                    const pathValues  = extractParams(template, req.url)// /:id/:uuid  and /1/ab21e1a
-                    if (pathValues !== null) { 
-                        const {keys, values } = pathValues;
-                        keys.forEach((key, index) =>{
-                            if(req.params === undefined){ 
+                    const pathValues = extractParams(path, req.url)// /:id/:uuid  and /1/ab21e1e
+                    if (!pathValues.hasParams ) {
+                        // route is static
+                        if(req.url === path){
+                            middleWare.handle(req, res, this.next)
+                            foundCorrectPath = true
+                            return
+                        }
+                        // wrong route all together
+                        return; // stop further processing
+
+                    }
+                    else {
+                        const { keys, values } = pathValues.params ;
+
+                        keys.forEach((key, index) => {
+                            if (req.params == undefined) {
                                 req.params = {}
                             }
-                            req.params[key] = values[index]
+                            if (req.params[key] == undefined) {
+                                req.params[key] = "";
+                            }
+                            req.params[key] = values[index];
+
                         })
+                        if (matchParametrizedPath(path, req.url)) {
+                            middleWare.handle(req, res, this.next)
+                            foundCorrectPath = true;
+                            return;
+                        }
+                        ret 
                     }
-                    if (matchParametrizedPath(template, req.url)){
-                        middleWare.handle(req,res) 
-                        foundCorrectPath = true
-                    }
+                    
+
                 }
             }
         )
-        if (!foundCorrectPath){
+        if (!foundCorrectPath) {
             res.setHeader("Content-Type", "text/plain");
-            res.writeHead(403);
-            res.end("Invalid request");
+            res.writeHead(400);
+            res.end("Invalid request. Your request cannot be processed");
         }
         return res;
     }
@@ -139,16 +216,14 @@ function createRouter() {
 }
 class Router {
     /**
-     * TODO merge
+     * TODO merge multiple routers
      * 
      * @param {Object} mergeParams 
      */
     constructor(params = { mergeParams: false }) {
         this.routingObject = {}
-        this.parms = params
+        this.params = params
     }
-
-
 
     get(key, callback) {
         if (this.routingObject[key] === undefined) {
@@ -186,101 +261,94 @@ class Router {
     }
 }
 
-function deepMerge(obj1, obj2) {
 
+// This is a function to wurschtel two object zsam
+function deepMerge(obj1, obj2) {
     for (var p in obj2) {
-      try {
-        // Property in destination object set; update its value.
-        if ( obj2[p].constructor==Object ) {
-          obj1[p] = deepMerge(obj1[p], obj2[p]);
-  
-        } else {
-          obj1[p] = obj2[p];
-  
+        try {
+            if (obj2[p].constructor == Object) {
+                obj1[p] = deepMerge(obj1[p], obj2[p]);
+            } else {
+                obj1[p] = obj2[p];
+            }
+        } catch (e) {
+            obj1[p] = obj2[p];
         }
-  
-      } catch(e) {
-        // Property in destination object not set; create it and set its value.
-        obj1[p] = obj2[p];
-  
-      }
     }
-  
     return obj1;
 }
 
 
 
-function matchParametrizedPath(template, actualPath){ 
-    const keyRegex = /:([^\s/]+)/g; 
-
-    // Create the regex string for matching the actual path
-    const regexString = template.replace(keyRegex,'([^/]+)');
-    const regex = new RegExp(`^${regexString}$`);
-// Execute the regex on the actual path
-    const pathMatch = actualPath.match(regex);
-    return pathMatch
+function hasParams(template) {
+    const keyRegex = /:([^\s/]+)/g;
+    if (!keyRegex.test(template)) {
+        return false
+    }
+    return true
 }
 
-
-function extractParams(template, actualPath) {
-
-    // Convert the path template into a regex
-    const keyRegex = /:([^\s/]+)/g; 
-
-    // Create the regex string for matching the actual path
-    const regexString = template.replace(keyRegex,'([^/]+)');
-    const regex = new RegExp(`^${regexString}$`);
-
-    // Extract keys from template
-    const keys = [];
-    let match;
-    while ((match = keyRegex.exec(template)) !== null) {
-        keys.push(match[1]);
+function matchParametrizedPath(template, actualPath) {
+    console.log(hasParams(template))
+    if (!hasParams(template)) {
+        return false
     }
+    // Create the regex string for matching the actual path
+    const keyRegex = /:([^\s/]+)/g;
 
+    const regexString = template.replace(keyRegex, "[0-9]+");
+    const regex = new RegExp(`^${regexString}$`);
 
     // Execute the regex on the actual path
-    const pathMatch = actualPath.match(regex);
+    if (regex.test(actualPath)) {
+        return true
+    }
 
+    return false;
+}
 
-    // Check if a match is found
-    if (pathMatch) {
-        if(pathMatch === "undefined"){
-            return null;
+function extractParams(template, actualPath) {
+    // NON SYMBOLIC
+    // Convert the path template into a regex. 
+    const keyRegex = /:([^\s\/]+)/g;
+    if (!keyRegex.test(template)) {
+        return { params: null, hasParams: false}; // Template has no parameters
+    }
+    // Create the regex string for matching the actual path
+    const regexString = template.replace(keyRegex, '([0-9]{1,3})');
+    try {
+        const regex = new RegExp(`^${regexString}$`);
+        if (!regex.match(actualPath)) {
+            return { params: null, hasParams: false}
         }
-        const values = pathMatch.slice(1); // Exclude the full match
-        return { keys, values }; // Return keys and corresponding values
-    } else {
-        return null; // No match found
+        // Extract keys from template
+        const keys = [];
+        var matches = template.match(keyRegex) // this has nothing symbolic
+        matches.forEach(elem => keys.push(elem.slice(1)))
+        console.log(keys)
+
+        // SYMBOLIC PATH
+        S$.assert(regex.test(actualPath), "Path does not match")
+
+        // Check if a match is found 
+        if (regex.test(actualPath)) {
+            var pathMatch = actualPath.match(regex)
+            const values = pathMatch.slice(1);
+            console.log({ keys, values })
+            return{ params: { keys, values }, hasParams: true}; // Return keys and corresponding values}
+        }
+
+    } catch (error) {
+
+        console.error("Invalid regex pattern", error);
+
+        return null; // Handle the error gracefully
+
     }
-}
+    return { params: null, hasParams: false}; // No match found
 
 
-/*
-RoutingObject = 
-{
-    "/item" : {
-        "get": function,
-        "put": putfunc
-    },
-    "/sthelse": { 
-        "get": someotherfunction,
-        "post": somePostFunction
-    }
-    // new idea 
-    "/item" : {
-        methods: {
-            get: true,
-            put: true
-        },
-        get: function,
-        put: putfunction
-        },
-    "/sthelse": { 
-        "get": someotherfunction,
-        "post": somePostFunction
-    }
+
 }
-*/
+
 

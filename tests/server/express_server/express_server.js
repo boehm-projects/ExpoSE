@@ -7,7 +7,7 @@
 // created a client to inject "http" data into the app.listen function
 //
 // In theory, every express server should be testable with these changes
-// Every function has to be modeled in /express_model/express and router.
+// Every express function has to be modeled in /express_model/express and router.
 var express = require('../express_model/express')
 const route = require('./express_route').default
 
@@ -15,35 +15,38 @@ const route = require('./express_route').default
 var client = require('./express_test_client')()
 var app = express.createApplication()
 
-app.use((req, res) => {
-  console.log("im using this with " + req.url)
-})
+// app.use((req, res) => {
+//   console.log(req.url)
+// })
 // testing the use() function for modifying the request
-app.use("print les bull", (req, res) => {
-  console.log("THIS IS ANOTHER BULL")
-}, (req, res) => {
-  console.log("THIS IS ANOTHER ANOTHER BULL")
-})
+// app.use("2 callbacks", (req, res) => {
+//   console.log("1 Callback")
+// }, (req, res) => {
+//   console.log("2  Callback")
+// })
 
-app.use("stampede", (req, res) => {
-  console.log("THIS IS LA STAMPEDE")
-}, (req, res) => {
-  console.log("THIS IS ANOTHER STAMPEDE")
-}, (req, res) => {
-  console.log("THIS IS ANOTHER ANOTHER STAMPEDE")
-})
+// app.use("> 2 Callbacks", (req, res) => {
+//   console.log("1 Callback")
+// }, (req, res) => {
+//   console.log("2 Callbacke")
+// }, (req, res) => {
+//   console.log("3 Callback")
+// })
+
+// app.get('/', function(req, res, next){
+//   res.writeHead(200, { 'Content-Type': 'application/json' })
+//   var response = { "response": "Server is up and running" }
+//   res.end(response)
+// })
 
 app.use('/', route)
 
-app.use("modify res", (req, res) => {
-  if (res !== undefined) {
-    console.log(res)
-    console.log("this is after the response is generated. last minute changes can be done here ")
-  }
-  else {
-    throw "there is something wrong with this country"
-  }
 
+
+app.use("modify res", (req, res, next) => {
+  if (res !== undefined) {
+  }
+  next()
 })
 
 app.set("port", 4000)
@@ -57,6 +60,6 @@ const res = app.listen(app.get("port"), function () {
 
 
 
-client.doSomethingWithTheResponse(res);
 
 
+client.doSomethingWithTheResponse(res)

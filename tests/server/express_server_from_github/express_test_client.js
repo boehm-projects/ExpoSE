@@ -14,33 +14,33 @@ class Client {
         this.nameField = "name"
         this.emailField = "name@name"
         this.phoneNumber = "089123"
+        this.text = "Text"
 
     }
     generateRequest() {
-        var url = S$.symbol("path", "/")
+        var url = S$.symbol("path", "/session/")
         if (url == "" || url == undefined) {
             throw "invalid url"
         }
 
-        //this.getUserInput()
         this.getUserInput()
-        if (this.nameField == "" || !(/^[<>]{4}$/.test(this.nameField))) {
-            throw "invalid name"
-        }
-        if (this.emailField == "" || !(/name@name/.test(this.emailField))) {
-            throw "invalid email"
-        }
-        if (this.phoneNumber == "" || !(/089123/.test(this.phoneNumber))) {
-            throw "invalid phone"
+        // this.getUserInput()
+        // if (this.nameField == "" || !(/^[<>]{4}$/.test(this.nameField))) {
+        //     throw "invalid name"
+        // }
+        // if (this.emailField == "" || !(/name@name/.test(this.emailField))) {
+        //     throw "invalid email"
+        // }
+        // if (this.phoneNumber == "" || !(/089123/.test(this.phoneNumber))) {
+        //     throw "invalid phone"
+        // }
+        if (this.text == "" || !(/text/.test(this.text))) {
+            throw "invalid text"
         }
         var req = new Request(
             url,
             HttpMethods[S$.symbol("method", 0)],
-            {
-                name: this.nameField,
-                email: this.emailField,
-                phone: this.phoneNumber
-            },
+            {text: this.text},
             {}
         )
 
@@ -69,9 +69,10 @@ class Client {
 
     // generate symbolic user input.
     getUserInput() {
-        this.nameField = S$.symbol("name", this.nameField),
-            this.emailField = S$.symbol("email", this.emailField),
-            this.phoneNumber = S$.symbol("phoneNumber", this.phoneNumber)
+        // this.nameField = S$.symbol("name", this.nameField),
+        //     this.emailField = S$.symbol("email", this.emailField),
+        //     this.phoneNumber = S$.symbol("phoneNumber", this.phoneNumber)
+        this.text =  S$.symbol("text", this.text)
     }
 
 

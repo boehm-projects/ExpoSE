@@ -1,18 +1,20 @@
 
-var service = require('./express_controller')
+var controller = require('./express_controller').createController()
 var express = require('../express_model/express')
 
 var router = express.createRouter()
 
 
-router.get('/get', service.getRequest )
+router.get('/user/:id', controller.getById )
 
-router.get('/:id', service.getById )
+router.get('/user', controller.getRequest)
 
-router.post('/post', service.postRequest  )
+router.post('/createUser', controller.createUser)
 
-router.put('/put', service.putRequest )
+router.post('/createUserSanitized', controller.createUserSanitized)
 
-router.delete('/delete', service.deleteRequest )
+router.put('/put', controller.putRequest)
+
+router.delete('/delete', controller.deleteRequest)
 
 export default router;
