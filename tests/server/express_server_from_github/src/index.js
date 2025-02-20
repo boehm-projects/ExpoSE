@@ -31,6 +31,11 @@ app.use('/users', routes.user);
 app.use('/messages', routes.message);
 // * Start * //
 
+app.use((req,res,next) => {
+  console.log(res)
+  next()
+})
+
 const res = app.listen(3000, () =>
   console.log(`Example app listening on port 3000!`),
 client.generateRequest(),

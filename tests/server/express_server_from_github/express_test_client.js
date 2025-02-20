@@ -18,7 +18,7 @@ class Client {
 
     }
     generateRequest() {
-        var url = S$.symbol("path", "/session/")
+        var url = S$.symbol("path", "/messages/1")
         if (url == "" || url == undefined) {
             throw "invalid url"
         }
@@ -34,16 +34,14 @@ class Client {
         // if (this.phoneNumber == "" || !(/089123/.test(this.phoneNumber))) {
         //     throw "invalid phone"
         // }
-        if (this.text == "" || !(/text/.test(this.text))) {
-            throw "invalid text"
-        }
         var req = new Request(
             url,
             HttpMethods[S$.symbol("method", 0)],
             {text: this.text},
-            {}
+            {},
+            {text: this.text},
         )
-
+        console.log(req)
         // This requires knowledge of the server. 
         // Expose will not find a path containing any parameter (e.g. /user/abcd1234/),
         // but instead a path mirroring the path and its variable name (e.g. /user/:uuid)

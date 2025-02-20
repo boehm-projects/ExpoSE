@@ -29,6 +29,8 @@ export class Response {
 	}
 
 	send(data){
+		this.statusCode = 200 
+		this.headers["content-type"] = "application/json"
 		this.body["data"] = data;
 	}
 

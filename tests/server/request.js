@@ -1,8 +1,9 @@
 export class Request {
-	constructor(url, method, data, params){
+	constructor(url, method, data, params, body){
 		this.url = url;
 		this.method = method;
 		this.data = data;
+		this.body = body
 		this.params = params
 		this.connection = {
 			destroy: function(){

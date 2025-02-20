@@ -40,10 +40,10 @@ class Application {
                 "path": key,
             }
             objectBuilder["route"] = routerObjectValue
-            objectBuilder["path"] = key
+            objectBuilder["path"] =  this._generateRegex(key);
             objectBuilder["handle"] = callback
             objectBuilder["method"] = "GET";
-            console.log("we made it here")
+            objectBuilder["params"] = _extractParamsKeys(key)
             this.stack.push(objectBuilder)
         }
         else {
@@ -57,9 +57,10 @@ class Application {
             "path": key,
         }
         objectBuilder["route"] = routerObjectValue
-        objectBuilder["path"] = key
+        objectBuilder["path"] =  this._generateRegex(key);
         objectBuilder["handle"] = callback
         objectBuilder["method"] = "PUT";
+        objectBuilder["params"] = _extractParamsKeys(key)
         this.stack.push(objectBuilder)
     }
 
@@ -69,9 +70,10 @@ class Application {
             "path": key,
         }
         objectBuilder["route"] = routerObjectValue
-        objectBuilder["path"] = key
+        objectBuilder["path"] = this._generateRegex(key);
         objectBuilder["handle"] = callback
         objectBuilder["method"] = "DELETE";
+        objectBuilder["params"] = _extractParamsKeys(key)
         this.stack.push(objectBuilder)
     }
     post(key, callback) {
@@ -80,9 +82,10 @@ class Application {
             "path": key,
         }
         objectBuilder["route"] = routerObjectValue
-        objectBuilder["path"] = key
+        objectBuilder["path"] = this._generateRegex(key);
         objectBuilder["handle"] = callback
         objectBuilder["method"] = "POST";
+        objectBuilder["params"] = _extractParamsKeys(key)
         this.stack.push(objectBuilder)
 
     }
@@ -104,8 +107,8 @@ class Application {
                     let routerObjectValue = {
                         "path": key,
                     }
-                    objectBuilder["route"] = deepMerge(routerObjectValue, value)
-                    objectBuilder["path"] = basePath  + key;
+                    objectBuilder["route"] = _deepMerge(routerObjectValue, value)
+                    objectBuilder["path"] = this._generateRegex(basePath ,key);
                     objectBuilder["handle"] = value[routekey];
                     objectBuilder["method"] = routekey;
                     this.stack.push(objectBuilder)
@@ -156,47 +159,42 @@ class Application {
             middleWare => {
                 if (middleWare.method === "use") {
                     middleWare.handle(req, res, this.next)
+                    return
                 }
 
                 if (middleWare.method == req.method && foundCorrectPath === false) {
-
-                    let path = middleWare.path
-
-                    // are there any path attributes? e.g. /:id 
-                    const pathValues = extractParams(path, req.url)// /:id/:uuid  and /1/ab21e1e
-                    if (!pathValues.hasParams ) {
-                        // route is static
-                        if(req.url === path){
-                            middleWare.handle(req, res, this.next)
+                    const match = middleWare.path.test(req.url)
+                    // console.log("here i can get to", match, middleWare.path, req.url)
+                    // console.log(middleWare.route.params[middleWare.method]) 
+                    // console.log(middleWare.path)
+                    if(match){
+                        console.log("here i can get to", match, middleWare.path, req.url)
+                        console.log(middleWare.route.params[middleWare.method]) 
+                        console.log(middleWare.path)
+                        // no params on this path
+                        if(middleWare.route.params[middleWare.method].length === 0){
                             foundCorrectPath = true
-                            return
+                            middleWare.handle(req, res, this.next)
+                            return // stop further processing
                         }
-                        // wrong route all together
-                        return; // stop further processing
-
-                    }
-                    else {
-                        const { keys, values } = pathValues.params ;
-
-                        keys.forEach((key, index) => {
+                        var pathMatch = req.url.match(middleWare.path)
+                        const values = pathMatch.slice(1);
+                        middleWare.route.params[middleWare.method].forEach((key, index) => {
                             if (req.params == undefined) {
                                 req.params = {}
                             }
                             if (req.params[key] == undefined) {
                                 req.params[key] = "";
                             }
-                            req.params[key] = values[index];
-
-                        })
-                        if (matchParametrizedPath(path, req.url)) {
-                            middleWare.handle(req, res, this.next)
-                            foundCorrectPath = true;
-                            return;
-                        }
-                        ret 
+                            req.params[key] = values[index];})
+                        foundCorrectPath = true
+                        middleWare.handle(req, res, this.next)
+                        console.log(req)
+                        return // stop further processing
                     }
-                    
-
+                    else{
+                        return
+                    }
                 }
             }
         )
@@ -206,6 +204,22 @@ class Application {
             res.end("Invalid request. Your request cannot be processed");
         }
         return res;
+    }
+
+    _generateRegex(){
+        var regexString = ""
+        for (var i = 0; i < arguments.length; i++) {
+            if(hasParams(arguments[i])){
+                const keyRegex = /:([^\s\/]+)/g;
+                // Create the regex string for matching the actual path
+                regexString += arguments[i].replace(keyRegex, '(\\d{1,4})');
+            }
+            else{
+                regexString += arguments[i]
+            }
+
+        }
+        return new RegExp(`^${regexString}$`)
     }
 
 }
@@ -229,7 +243,9 @@ class Router {
         if (this.routingObject[key] === undefined) {
             this.routingObject[key] = {}
             this.routingObject[key]["methods"] = {}
+            this.routingObject[key]["params"] = {}
         }
+        this.routingObject[key]["params"][HttpMethods[0]] = _extractParamsKeys(key)
         this.routingObject[key]["methods"][HttpMethods[0]] = true
         this.routingObject[key][HttpMethods[0]] = callback
     }
@@ -237,7 +253,10 @@ class Router {
         if (this.routingObject[key] === undefined) {
             this.routingObject[key] = {}
             this.routingObject[key]["methods"] = {}
+            this.routingObject[key]["params"] = {}
+
         }
+        this.routingObject[key]["params"][HttpMethods[2]] = _extractParamsKeys(key)
         this.routingObject[key]["methods"][HttpMethods[2]] = true
         this.routingObject[key][HttpMethods[2]] = callback
     }
@@ -246,7 +265,10 @@ class Router {
         if (this.routingObject[key] === undefined) {
             this.routingObject[key] = {}
             this.routingObject[key]["methods"] = {}
+            this.routingObject[key]["params"] = {}
+
         }
+        this.routingObject[key]["params"][HttpMethods[4]] = _extractParamsKeys(key)
         this.routingObject[key]["methods"][HttpMethods[4]] = true
         this.routingObject[key][HttpMethods[4]] = callback
     }
@@ -254,20 +276,25 @@ class Router {
         if (this.routingObject[key] === undefined) {
             this.routingObject[key] = {}
             this.routingObject[key]["methods"] = {}
+            this.routingObject[key]["params"] = {}
+
         }
+        this.routingObject[key]["params"][HttpMethods[1]] = _extractParamsKeys(key)
         this.routingObject[key]["methods"][HttpMethods[1]] = true
         this.routingObject[key][HttpMethods[1]] = callback
 
     }
+
+  
 }
 
 
 // This is a function to wurschtel two object zsam
-function deepMerge(obj1, obj2) {
+function _deepMerge(obj1, obj2) {
     for (var p in obj2) {
         try {
             if (obj2[p].constructor == Object) {
-                obj1[p] = deepMerge(obj1[p], obj2[p]);
+                obj1[p] = _deepMerge(obj1[p], obj2[p]);
             } else {
                 obj1[p] = obj2[p];
             }
@@ -279,7 +306,16 @@ function deepMerge(obj1, obj2) {
 }
 
 
-
+function _extractParamsKeys(template){
+    const keyRegex = /:([^\s\/]+)/g;
+    const keys = [];
+    var matches = template.match(keyRegex) // this has nothing symbolic
+    if(!matches){
+        return keys
+    }
+    matches.forEach(elem => keys.push(elem.slice(1)))
+    return keys
+}
 function hasParams(template) {
     const keyRegex = /:([^\s/]+)/g;
     if (!keyRegex.test(template)) {
@@ -287,68 +323,3 @@ function hasParams(template) {
     }
     return true
 }
-
-function matchParametrizedPath(template, actualPath) {
-    console.log(hasParams(template))
-    if (!hasParams(template)) {
-        return false
-    }
-    // Create the regex string for matching the actual path
-    const keyRegex = /:([^\s/]+)/g;
-
-    const regexString = template.replace(keyRegex, "[0-9]+");
-    const regex = new RegExp(`^${regexString}$`);
-
-    // Execute the regex on the actual path
-    if (regex.test(actualPath)) {
-        return true
-    }
-
-    return false;
-}
-
-function extractParams(template, actualPath) {
-    // NON SYMBOLIC
-    // Convert the path template into a regex. 
-    const keyRegex = /:([^\s\/]+)/g;
-    if (!keyRegex.test(template)) {
-        return { params: null, hasParams: false}; // Template has no parameters
-    }
-    // Create the regex string for matching the actual path
-    const regexString = template.replace(keyRegex, '([0-9]{1,3})');
-    try {
-        const regex = new RegExp(`^${regexString}$`);
-        if (!regex.match(actualPath)) {
-            return { params: null, hasParams: false}
-        }
-        // Extract keys from template
-        const keys = [];
-        var matches = template.match(keyRegex) // this has nothing symbolic
-        matches.forEach(elem => keys.push(elem.slice(1)))
-        console.log(keys)
-
-        // SYMBOLIC PATH
-        S$.assert(regex.test(actualPath), "Path does not match")
-
-        // Check if a match is found 
-        if (regex.test(actualPath)) {
-            var pathMatch = actualPath.match(regex)
-            const values = pathMatch.slice(1);
-            console.log({ keys, values })
-            return{ params: { keys, values }, hasParams: true}; // Return keys and corresponding values}
-        }
-
-    } catch (error) {
-
-        console.error("Invalid regex pattern", error);
-
-        return null; // Handle the error gracefully
-
-    }
-    return { params: null, hasParams: false}; // No match found
-
-
-
-}
-
-

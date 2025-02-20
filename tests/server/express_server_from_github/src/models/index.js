@@ -1,11 +1,11 @@
 let users = {
   1: {
     id: '1',
-    username: 'Robin Wieruch',
+    username: 'Lionel Messi',
   },
   2: {
     id: '2',
-    username: 'Dave Davids',
+    username: 'John Doe',
   },
 };
 
