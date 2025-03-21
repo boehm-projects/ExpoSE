@@ -1,9 +1,6 @@
 const { Response } = require("../response");
 const { default: HttpMethods } = require("./http_methods.enum");
 
-const S$ = require("S$");
-
-
 
 module.exports.createApplication = createApplication;
 
@@ -24,9 +21,8 @@ class Application {
 
     listen(key, callbackparam, req) {
         var res = new Response()
-        console.log(req)
         this.handleStack(req, res)
-
+        console.log(res)
         return res
     }
     set(key, value) {
@@ -36,15 +32,18 @@ class Application {
     get(key, callback) {
         if (callback) {
             let objectBuilder = {}
-            let routerObjectValue = {
+           let routerObjectValue = {
                 "path": key,
+                "params": {
+                    [HttpMethods[0]] : _extractParamsKeys(key)
+                }
             }
             objectBuilder["route"] = routerObjectValue
             objectBuilder["path"] =  this._generateRegex(key);
             objectBuilder["handle"] = callback
-            objectBuilder["method"] = "GET";
-            objectBuilder["params"] = _extractParamsKeys(key)
+            objectBuilder["method"] =HttpMethods[0];
             this.stack.push(objectBuilder)
+            console.log(objectBuilder)
         }
         else {
             return this.dataMap[key]
@@ -54,38 +53,45 @@ class Application {
     put(key, callback) {
         let objectBuilder = {}
         let routerObjectValue = {
-            "path": key,
+            "path": key,               
+            "params": {
+                    [HttpMethods[2]] : _extractParamsKeys(key)
+                }
         }
         objectBuilder["route"] = routerObjectValue
         objectBuilder["path"] =  this._generateRegex(key);
         objectBuilder["handle"] = callback
-        objectBuilder["method"] = "PUT";
-        objectBuilder["params"] = _extractParamsKeys(key)
+        objectBuilder["method"] = HttpMethods[2];
         this.stack.push(objectBuilder)
     }
 
     delete(key, callback) {
         let objectBuilder = {}
+            objectBuilder["params"] = {};
         let routerObjectValue = {
-            "path": key,
+            "path": key,                
+            "params": {
+                    [HttpMethods[4]] : _extractParamsKeys(key)
+                }
         }
         objectBuilder["route"] = routerObjectValue
         objectBuilder["path"] = this._generateRegex(key);
         objectBuilder["handle"] = callback
-        objectBuilder["method"] = "DELETE";
-        objectBuilder["params"] = _extractParamsKeys(key)
+        objectBuilder["method"] = HttpMethods[4];
         this.stack.push(objectBuilder)
     }
     post(key, callback) {
         let objectBuilder = {}
         let routerObjectValue = {
-            "path": key,
+            "path": key,                
+            "params": {
+                    [HttpMethods[1]] : _extractParamsKeys(key)
+                }
         }
         objectBuilder["route"] = routerObjectValue
         objectBuilder["path"] = this._generateRegex(key);
         objectBuilder["handle"] = callback
-        objectBuilder["method"] = "POST";
-        objectBuilder["params"] = _extractParamsKeys(key)
+        objectBuilder["method"] = HttpMethods[1];
         this.stack.push(objectBuilder)
 
     }
@@ -164,13 +170,7 @@ class Application {
 
                 if (middleWare.method == req.method && foundCorrectPath === false) {
                     const match = middleWare.path.test(req.url)
-                    // console.log("here i can get to", match, middleWare.path, req.url)
-                    // console.log(middleWare.route.params[middleWare.method]) 
-                    // console.log(middleWare.path)
                     if(match){
-                        console.log("here i can get to", match, middleWare.path, req.url)
-                        console.log(middleWare.route.params[middleWare.method]) 
-                        console.log(middleWare.path)
                         // no params on this path
                         if(middleWare.route.params[middleWare.method].length === 0){
                             foundCorrectPath = true

@@ -15,33 +15,33 @@ const route = require('./express_route').default
 var client = require('./express_test_client')()
 var app = express.createApplication()
 
-// app.use((req, res) => {
-//   console.log(req.url)
-// })
-// testing the use() function for modifying the request
-// app.use("2 callbacks", (req, res) => {
-//   console.log("1 Callback")
-// }, (req, res) => {
-//   console.log("2  Callback")
-// })
+app.use((req, res) => {
+  console.log(req.url)
+})
+//testing the use() function for modifying the request
+app.use("2 callbacks", (req, res) => {
+  console.log("1 Callback")
+}, (req, res) => {
+  console.log("2 Callback")
+})
 
-// app.use("> 2 Callbacks", (req, res) => {
-//   console.log("1 Callback")
-// }, (req, res) => {
-//   console.log("2 Callbacke")
-// }, (req, res) => {
-//   console.log("3 Callback")
-// })
+app.use("> 2 Callbacks", (req, res) => {
+  console.log("1 Callback")
+}, (req, res) => {
+  console.log("2 Callback")
+}, (req, res) => {
+  console.log("3 Callback")
+})
 
-// app.get('/', function(req, res, next){
-//   res.writeHead(200, { 'Content-Type': 'application/json' })
-//   var response = { "response": "Server is up and running" }
-//   res.end(response)
-// })
+
 
 app.use('/', route)
 
-
+app.get('/', function(req, res, next){
+  res.writeHead(100, { 'Content-Type': 'application/json' })
+  var response = { "response": "Server is up and running" }
+  res.end(response)
+})
 
 app.use("modify res", (req, res, next) => {
   if (res !== undefined) {

@@ -13,6 +13,7 @@ class Runner {
 		this._iteration = 0;
 		this._total = iterations;
 		this._maxConcurrent = maxConcurrent;
+		this._metErrors = []
 	}
 
 	start() {
@@ -71,6 +72,13 @@ class Runner {
 		console.log("**************************");
 		console.log("*        " + this.done + " complete     *");
 		console.log("*        " + this._errors + " errors        *");
+		this._metErrors.forEach(
+			entry => {
+				console.log("*       Iteration *" + entry["test#"]  + "* failed with        *")
+				console.log("*       *" + entry.errors + "*                *" )
+			}
+
+		)
 		console.log("**************************");
 
 		this._times.forEach((time) => {
@@ -83,8 +91,13 @@ class Runner {
 	_testFileDone(test, code, time, file) {
 		this.done++;
 		this._printStatus();
-		if (code !== file.expectErrors) {
-			process.stderr.write("\n" + file + " failed with errors (" + code + "). Printing output\n");
+		if (code >= file.expectErrors) {
+			this._metErrors.push({
+				"test#": this._iteration,
+				"errors": code
+
+			})
+			process.stderr.write("\n" + file._iteration + " failed with errors (" + code + "). Printing output\n");
 			process.stderr.write(test.out + "\n");
 			this._errors++;
 		}

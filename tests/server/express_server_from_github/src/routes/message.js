@@ -11,16 +11,18 @@ router.get('/:messageId', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const id = Math.floor(Math.random() * (1000 - 0)) + 0
-  const message = {
-    id,
-    text: req.body.text,
-    userId: req.context.me.id,
-  };
-
-  req.context.models.messages[id] = message;
-
-  return res.send(message);
+  const id = Math.floor(Math.random() * (1000 - 0)) + 0;
+  if (typeof req.body.text === 'string' ){
+    if (req.body.text.length > 0){
+      const message = {
+      id,
+      text: req.body.text,
+      userId: req.context.me.id,
+    };
+    req.context.models.messages[id] = message;
+    }
+  }
+ return res.send(message);
 });
 
 router.delete('/:messageId', (req, res) => {

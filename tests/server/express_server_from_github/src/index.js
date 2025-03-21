@@ -14,7 +14,7 @@ const app = express.createApplication();
 // Built-In Middleware
 
 
-// Custom Middleware
+// Custom Middleware for authentication or similar
 
 app.use((req, res, next) => {
   req.context = {
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.use('/session', routes.session);
 app.use('/users', routes.user);
 app.use('/messages', routes.message);
-// * Start * //
+// * Start * //  
 
 app.use((req,res,next) => {
   console.log(res)

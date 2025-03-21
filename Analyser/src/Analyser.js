@@ -31,7 +31,7 @@ process.on("disconnect", function() {
 
 J$.analysis = new SymbolicExecution(J$, JSON.parse(input), (state, coverage) => {
 
-	Log.log("Finished play with PC " + state.pathCondition.map(x => x.ast));
+	Log.log("Finished play with PC " + state.pathCondition.map(x => x.ast) + "and Input " + input);
 
 	if (Config.outCoveragePath) {
 		fs.writeFileSync(Config.outCoveragePath, JSON.stringify(coverage.end()));
@@ -57,4 +57,5 @@ J$.analysis = new SymbolicExecution(J$, JSON.parse(input), (state, coverage) => 
 			Log.log("No final output path supplied");
 		}
 	});
+	Log.log(state.alternatives);
 });

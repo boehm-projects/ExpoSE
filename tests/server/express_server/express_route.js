@@ -11,7 +11,7 @@ router.get('/user', controller.getRequest)
 
 router.post('/createUser', controller.createUser)
 
-router.post('/createUserSanitized', controller.createUserSanitized)
+//router.post('/createUserSanitized', controller.createUserSanitized)
 
 router.put('/put', controller.putRequest)
 

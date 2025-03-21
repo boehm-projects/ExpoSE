@@ -18,29 +18,17 @@ class Client {
     }
     generateRequest() {
         var url = S$.symbol("path", "/")
-        if (url == "" || url == undefined) {
-            throw "invalid url"
-        }
-
         //this.getUserInput()
         this.getUserInput()
-        if (this.nameField == "" || !(/^[<>]{4}$/.test(this.nameField))) {
-            throw "invalid name"
-        }
-        if (this.emailField == "" || !(/name@name/.test(this.emailField))) {
-            throw "invalid email"
-        }
-        if (this.phoneNumber == "" || !(/089123/.test(this.phoneNumber))) {
-            throw "invalid phone"
-        }
         var req = new Request(
             url,
             HttpMethods[S$.symbol("method", 0)],
             {
-                name: this.nameField,
-                email: this.emailField,
-                phone: this.phoneNumber
+              name: this.nameField,
+             email: this.emailField,
+             phone: this.phoneNumber
             },
+            {},
             {}
         )
 
@@ -78,24 +66,18 @@ class Client {
    
     doSomethingWithTheResponse(res){
         if (res instanceof Response){
-
             if (res.statusCode === 100) {
                 console.log("just for testing")
-
             }
-
             if (res.statusCode === 200) {
                 if (res.body.data.name){
                     console.log("Why does it work but then throws an error?")
-                    console.log("Hello " + res.body.data.name + " you have been " + this.nameField)
+                    console.log("Sanitized name " + res.body.data.name + " from " + this.nameField)
                     //S$.assert(res.body.data.name == this.nameField )
-
                 }
-
-
             }
             else if (res.statusCode >= 400 && res.statusCode < 500){
-                console.log("Response gave error , so it worked but not really :)")
+                console.log("Error Response. Something went wrong")
             }
         }   
     }

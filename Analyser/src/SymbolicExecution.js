@@ -125,7 +125,7 @@ class SymbolicExecution {
 		const functionName = f ? f.name : "undefined";
 
 		const fn_model = this.models.get(f);
-		Log.logMid(fn_model ? ("Exec Model: " + functionName + " " + (new Error()).stack) : functionName + " unmodeled");
+		Log.logMid(fn_model ? ("Exec Model: " + functionName + " " + (new Error()).stack) : functionName ?  functionName + " unmodeled" :"Anonymous function unmodeled " + (new Error()).stack) ;
 
 		/**
 		 * Concretize the function if it is native and we do not have a custom model for it

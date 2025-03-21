@@ -12,6 +12,7 @@ class Tester {
 		this.file = file;
 		this.iteration = iteration;
 		this.out = "";
+		this.extraErrors = 0;
 	}
 
 	build(done) {
@@ -25,7 +26,13 @@ class Tester {
 		});
 
 		prc.stdout.setEncoding("utf8");
-		prc.stdout.on("data", data => this.out += data.toString());
+		prc.stdout.on("data", data => {
+			if (data === "Response gave error , so it worked but not really :)"){
+				this.extraErrors += 1;
+				this.file.expectErrors +=1;
+			}
+			this.out += data.toString()
+		});
 
 		let startTime = Date.now();
 
