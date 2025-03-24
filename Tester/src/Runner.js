@@ -3,8 +3,6 @@
 
 
 import Tester from "./Tester";
-import * as http from "node:http";
-
 class Runner {
 
 	constructor(maxConcurrent, iterations, file){
@@ -80,27 +78,41 @@ class Runner {
 	 */
 	_evaluate(){
 		let counterObj = {
-			total: this._total,
+			total: 0
 		}
-		this._results.forEach(
-			entry =>
+		let totalPerRun = 0
+		let runCounter = 0
+		this._results.map(
+			elem =>
 			{
-				let path = entry.path
+				// Number of paths per run
+				totalPerRun = elem.inputs.length
+				counterObj["run"+runCounter] = {
+					totalPerRun: totalPerRun
+				}
+				let runObjBuidler = {}	
+				elem.inputs.forEach(
+					input => {
+						let path = input.path === "" ? "--" : input.path; 
+						runObjBuidler[input.method] ? runObjBuidler[input.method] : runObjBuidler[input.method] = {}
+						runObjBuidler[input.method][path] ? runObjBuidler[input.method][path] += 1 : runObjBuidler[input.method][path] = 1
 
-				if (counterObj[entry.method][path]){
-					counterObj[entry.method][path] += 1
-				}
-				else{
-					counterObj[entry.method] = {
-						path: 1
 					}
-				}
+				)
+				counterObj["run" +runCounter]["paths"] = runObjBuidler
+
+				runCounter++;
+				counterObj.total += totalPerRun
+
 			}
 		)
-		console.log(counterObj)
+		console.log(JSON.stringify(counterObj))
+		
+		return counterObj
 	}
 
 	finishedTesting() {
+		this._evaluate()
 		console.log("\n**************************");
 		console.log("*         Summary        *");
 		console.log("**************************");
@@ -119,7 +131,6 @@ class Runner {
 		this._times.forEach((time) => {
 			console.log(`* ${time}`);
 		});
-		this._evaluate()
 		this.cbs.forEach(cb => cb(this._errors));
 	}
 
