@@ -30,4 +30,4 @@ function g(x, y) {
 // if (x > 0) {
 // 	s$.assert(x*y > x, "assertion violation"); 
 // }
-console.log(g(x,y ))
+g(x,y )

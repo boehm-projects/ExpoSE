@@ -7,6 +7,6 @@ EXPOSE_LOG_LEVEL=0
 . ./scripts/build/build_tester
 
 node --version
-node ./Tester/bin/TestRunner.js  --concurrent=2 --iterations=2 --file=/Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/express_server/express_server.js --maxErrors=1
+node ./Tester/bin/TestRunner.js  --concurrent=2 --iterations=10 --file=/Users/moritz/uni/Masterarbeit/project/ExpoSE/tests/server/express_server/express_server.js --maxErrors=1
 
 exit $?

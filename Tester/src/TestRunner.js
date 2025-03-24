@@ -26,7 +26,7 @@ const expectedErrors = parseInt(getArgument("--maxErrors", 4));
 
 const iterations = parseInt(getArgument("--iterations", 10));
 const filesPath = getArgument("--file");
-if (file === "No optional field") {
+if (filesPath === "No optional field") {
 	process.exit(1);
 }
 

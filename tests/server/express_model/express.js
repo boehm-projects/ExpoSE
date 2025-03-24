@@ -21,9 +21,11 @@ class Application {
 
     listen(key, callbackparam, req) {
         var res = new Response()
+        res.setHeader("Content-Type", "text/plain");
+        res.writeHead(400);
+        res.end("Invalid request. Your request cannot be processed");
         this.handleStack(req, res)
-        console.log(res)
-        return res
+       return res
     }
     set(key, value) {
         this.dataMap[key] = value
@@ -64,7 +66,20 @@ class Application {
         objectBuilder["method"] = HttpMethods[2];
         this.stack.push(objectBuilder)
     }
-
+    patch(key, callback) {
+        let objectBuilder = {}
+        let routerObjectValue = {
+            "path": key,               
+            "params": {
+                    [HttpMethods[3]] : _extractParamsKeys(key)
+                }
+        }
+        objectBuilder["route"] = routerObjectValue
+        objectBuilder["path"] =  this._generateRegex(key);
+        objectBuilder["handle"] = callback
+        objectBuilder["method"] = HttpMethods[3];
+        this.stack.push(objectBuilder)
+    }
     delete(key, callback) {
         let objectBuilder = {}
             objectBuilder["params"] = {};
@@ -167,7 +182,6 @@ class Application {
                     middleWare.handle(req, res, this.next)
                     return
                 }
-
                 if (middleWare.method == req.method && foundCorrectPath === false) {
                     const match = middleWare.path.test(req.url)
                     if(match){
@@ -186,10 +200,11 @@ class Application {
                             if (req.params[key] == undefined) {
                                 req.params[key] = "";
                             }
-                            req.params[key] = values[index];})
+     // This is a hack, to convert string to int, as expoSE does not model the conversion outside of the unary functions minus and plus.
+                            req.params[key] = (+values[index])
+                        })
                         foundCorrectPath = true
                         middleWare.handle(req, res, this.next)
-                        console.log(req)
                         return // stop further processing
                     }
                     else{
@@ -271,6 +286,17 @@ class Router {
         this.routingObject[key]["params"][HttpMethods[4]] = _extractParamsKeys(key)
         this.routingObject[key]["methods"][HttpMethods[4]] = true
         this.routingObject[key][HttpMethods[4]] = callback
+    }
+    patch(key, callback) {
+        if (this.routingObject[key] === undefined) {
+            this.routingObject[key] = {}
+            this.routingObject[key]["methods"] = {}
+            this.routingObject[key]["params"] = {}
+
+        }
+        this.routingObject[key]["params"][HttpMethods[3]] = _extractParamsKeys(key)
+        this.routingObject[key]["methods"][HttpMethods[3]] = true
+        this.routingObject[key][HttpMethods[3]] = callback
     }
     post(key, callback) {
         if (this.routingObject[key] === undefined) {

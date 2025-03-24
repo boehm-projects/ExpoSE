@@ -13,12 +13,12 @@ class Tester {
 		this.iteration = iteration;
 		this.out = "";
 		this.extraErrors = 0;
+		this.inputs = []
 	}
 
 	build(done) {
 
 
-		console.log(this.file);
 		let env = process.env;
 		env.EXPOSE_EXPECTED_PC = this.file.expectPaths;
 		let prc = spawn(EXPOSE_TEST_SCRIPT, [this.file.path], {
@@ -31,9 +31,13 @@ class Tester {
 				this.extraErrors += 1;
 				this.file.expectErrors +=1;
 			}
+			if(data.startsWith("[PRINT]")){
+				let noPrint = data.split('[PRINT]')[1]
+				let onlyObject = JSON.parse(noPrint.split('\n')[0])
+				this.inputs.push(onlyObject)
+			}
 			this.out += data.toString()
 		});
-
 		let startTime = Date.now();
 
 		const SECOND = 1000;

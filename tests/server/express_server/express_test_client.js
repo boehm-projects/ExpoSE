@@ -77,7 +77,7 @@ class Client {
                 }
             }
             else if (res.statusCode >= 400 && res.statusCode < 500){
-                console.log("Error Response. Something went wrong")
+                console.log("Test Returned error Response.")
             }
         }   
     }

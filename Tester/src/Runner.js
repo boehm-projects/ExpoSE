@@ -13,7 +13,7 @@ class Runner {
 		this._iteration = 0;
 		this._total = iterations;
 		this._maxConcurrent = maxConcurrent;
-		this._metErrors = []
+		this._results = []
 	}
 
 	start() {
@@ -66,16 +66,51 @@ class Runner {
 		process.stdout.write("\r*** [" + this.done + "/" + this._total +"] [" + this._running + " running] [" + this._errors + " errors] ***\n");
 	}
 
+	/**
+	 * CounterObj
+	 * total : 100
+	 * routes {
+	 * 		method:
+	 * 			/path: count
+	 * 			/wow: count
+	 * 		method:
+	 * 			/othrpath:
+	 * 			/lolo:
+	 * }
+	 */
+	_evaluate(){
+		let counterObj = {
+			total: this._total,
+		}
+		this._results.forEach(
+			entry =>
+			{
+				let path = entry.path
+
+				if (counterObj[entry.method][path]){
+					counterObj[entry.method][path] += 1
+				}
+				else{
+					counterObj[entry.method] = {
+						path: 1
+					}
+				}
+			}
+		)
+		console.log(counterObj)
+	}
+
 	finishedTesting() {
 		console.log("\n**************************");
 		console.log("*         Summary        *");
 		console.log("**************************");
 		console.log("*        " + this.done + " complete     *");
 		console.log("*        " + this._errors + " errors        *");
-		this._metErrors.forEach(
+		this._results.forEach(
 			entry => {
-				console.log("*       Iteration *" + entry["test#"]  + "* failed with        *")
-				console.log("*       *" + entry.errors + "*                *" )
+				console.log("*       Iteration " + entry["test#"]  + "  *")
+				console.log("*       " + entry.errors + "                *" )
+				console.log(`${JSON.stringify(entry.inputs)}`)
 			}
 
 		)
@@ -84,24 +119,24 @@ class Runner {
 		this._times.forEach((time) => {
 			console.log(`* ${time}`);
 		});
-
+		this._evaluate()
 		this.cbs.forEach(cb => cb(this._errors));
 	}
 
 	_testFileDone(test, code, time, file) {
 		this.done++;
 		this._printStatus();
+		const resultObj = {}
 		if (code >= file.expectErrors) {
-			this._metErrors.push({
-				"test#": this._iteration,
-				"errors": code
-
-			})
+			resultObj["testNumber"] = this._iteration
+			resultObj["errors"] = code
+			
 			process.stderr.write("\n" + file._iteration + " failed with errors (" + code + "). Printing output\n");
 			process.stderr.write(test.out + "\n");
 			this._errors++;
 		}
-
+		resultObj["inputs"] = test.inputs
+		this._results.push(resultObj)
 		this._times.push(`${file.path} took ${time / 1000}s`);
 
 		this.postTest();

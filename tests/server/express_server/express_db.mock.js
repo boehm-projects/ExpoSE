@@ -1,6 +1,6 @@
 // Non persistent mock database
 export class MockoDB{
-    constructor(name){
+    constructor(){
         this.db = {}
         this.createTable("user")
     }
@@ -37,9 +37,18 @@ MockoDB.prototype.createEntry = function(key, entry){
 }
 
 MockoDB.prototype.getEntry = function(key, index){
+    let dbEntry
 
-    let dbEntry = this.db[key][index] ? this.db[key][index] : null
+    if(this.db[key][index]){
+        dbEntry = this.db[key][index]
+
     return dbEntry
+    }
+    else{
+        dbEntry = null
+
+    return dbEntry
+    }
 }
 
 MockoDB.prototype.findByField = function(key, field, data){
@@ -57,4 +66,26 @@ MockoDB.prototype.deleteEntry = function(key, index){
         success = true
     }
     return success
+}
+
+MockoDB.prototype.updateEntry = function(key, id, data){ 
+
+    let index = id
+    console.log(index)
+    if(this.db[key].length-1 > index){
+        return null
+    }
+    let state = this.getEntry(key,index)
+   
+    
+    if(state !== null){
+        this.db[key][index] = data
+        state = this.db[key][index]
+        return state
+    }
+    else{
+        return state
+
+    }
+     
 }

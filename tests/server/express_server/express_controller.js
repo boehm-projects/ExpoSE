@@ -16,9 +16,9 @@ class ExpressController {
 }
 
 ExpressController.prototype.getRequest = function (req, res) {
-
+    let users = s.getUsers()
     res.writeHead(200, { 'Content-Type': 'application/json' })
-    var response = { "message": "This is GET method." }
+    var response = { "message": users }
     res.end(response)
 }
 ExpressController.prototype.getById = function (req, res) {
@@ -29,7 +29,7 @@ ExpressController.prototype.getById = function (req, res) {
         throw "Params Id undefined"
     }
     else {
-        let user = s.getUser(parseInt(req.params.id))
+        let user = s.getUser(req.params.id)
         if (user == null) {
             res.writeHead(401, { 'content-type': 'application/json' })
             var response = { "response": "No user found" }
@@ -41,7 +41,6 @@ ExpressController.prototype.getById = function (req, res) {
         }
     }
     res.end(response)
-    console.log(res)
 }
 
 ExpressController.prototype.putRequest = function (req, res) {
@@ -57,35 +56,36 @@ ExpressController.prototype.createUser = function (req, res) {
     var response = newUser
     res.end(response)
 }
-ExpressController.prototype.createUserSanitized = function (req, res) {
-    let newUser = s.createUserSanitized(req.data)
-    res.writeHead(200, { 'Content-Type': 'application/json' })
-    var response = newUser
-    res.end(response)
-}
+
+// This was too much for expoSE
+// ExpressController.prototype.createUserSanitized = function (req, res) {
+//     let newUser = s.createUserSanitized(req.data)
+//     res.writeHead(200, { 'Content-Type': 'application/json' })
+//     var response = newUser
+//     res.end(response)
+// }
 
 ExpressController.prototype.deleteRequest = function (req, res) {
-    // let userId = s.findUserByField(req.data).index
-    // if (s.deleteUser(userId)){
-    //     res.writeHead(200, { 'Content-Type': 'application/json' })
-    //     var response = { "message": "This is DELETE method." }
-    //     res.end(response)
-    // }
+    let userId = s.findUserByField(req.data).index
+    if (s.deleteUser(userId)){
+        res.writeHead(200, { 'Content-Type': 'application/json' })
+        var response = { "message": "This is DELETE method." }
+        res.end(response)
+    }
     console.log('delete')
 }
 
-
-// UUID is too complex for the time being
-// ExpressController.prototype.getByUUID = function (req, res) {
-//     const uuidRegex = /^[a-fA-F0-9]{8}$/
-//     if (req.params.uuid === undefined || !uuidRegex.test(req.params.uuid)) {
-//         res.writeHead(400, { 'content-type': 'application/json' })
-//         var response = { "response": "No valid uuid" }
-//     }
-//     else {
-//         var uuid = req.params.uuid.toString()
-//         res.writeHead(200, { 'content-type': 'application/json' })
-//         var response = { "message": `${uuid}`}
-//     }
-//     res.end(response)
-// }
+ExpressController.prototype.patchRequest = function (req, res) {
+    let updatedUser =  s.patchUser(req.params.id, req.data)
+    console.log(updatedUser)
+    if (updatedUser !== null){
+        res.writeHead(200, { 'Content-Type': 'application/json' })
+        var response = { "message":  updatedUser }
+        res.end(response)
+    }
+    else {
+        res.writeHead(400, { 'content-type': 'application/json' })
+        var response = { "response": "user updated" }
+        res.end(response)
+    }
+}

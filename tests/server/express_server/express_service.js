@@ -22,14 +22,10 @@ const entityMap = {
 
 class UserService {
     constructor() {
-        this.db = new db.MockoDB("users")
+        this.db = new db.MockoDB()
     }
 
-
     createUser(data) {
-
-
-
         if (this.db.user === undefined) {
             this.db.createTable("user")
         }
@@ -47,7 +43,6 @@ class UserService {
         let newUser = this.db.getEntry("user", userIdx)
         console.log(newUser)
         return newUser
-
     }
 
     findUserByField(data) {
@@ -69,9 +64,16 @@ class UserService {
         }
         return null
     }
+    getUsers(){
+        return this.db.getTable("user")
+    }
 
     deleteUser(id) {
         return this.db.deleteEntry("user", id) ? true : false;
+    }
+
+    patchUser(id, data){
+        return this.db.updateEntry("user", id, data)
     }
 
 

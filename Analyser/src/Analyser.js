@@ -57,5 +57,4 @@ J$.analysis = new SymbolicExecution(J$, JSON.parse(input), (state, coverage) => 
 			Log.log("No final output path supplied");
 		}
 	});
-	Log.log(state.alternatives);
 });
