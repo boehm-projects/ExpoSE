@@ -1,9 +1,6 @@
 /* Copyright (c) Royal Holloway, University of London | Contact Blake Loring (blake@parsed.uk), Duncan Mitchell (Duncan.Mitchell.2015@rhul.ac.uk), or Johannes Kinder (johannes.kinder@rhul.ac.uk) for details or support | LICENSE.md for license details */
 
-
-
 import {spawn} from "child_process";
-
 const EXPOSE_TEST_SCRIPT = "./expoSE";
 
 class Tester {
@@ -31,7 +28,7 @@ class Tester {
 				this.extraErrors += 1;
 				this.file.expectErrors +=1;
 			}
-			if(data.startsWith("[PRINT]")){
+			if(data.includes("[PRINT]")){
 				let noPrint = data.split('[PRINT]')[1]
 				let onlyObject = JSON.parse(noPrint.split('\n')[0])
 				this.inputs.push(onlyObject)

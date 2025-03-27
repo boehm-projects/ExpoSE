@@ -5,6 +5,7 @@
   "author": "Blake Loring <blake@parsed.uk>",
   "readme": "README.md",
   "dependencies": {
+    "pidusage": "^4.0.0",
     "walk": "*"
   },
   "license": "Apache",

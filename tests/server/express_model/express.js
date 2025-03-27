@@ -45,7 +45,6 @@ class Application {
             objectBuilder["handle"] = callback
             objectBuilder["method"] =HttpMethods[0];
             this.stack.push(objectBuilder)
-            console.log(objectBuilder)
         }
         else {
             return this.dataMap[key]

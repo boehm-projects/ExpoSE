@@ -91,6 +91,7 @@ class Runner {
 					totalPerRun: totalPerRun
 				}
 				let runObjBuidler = {}	
+				
 				elem.inputs.forEach(
 					input => {
 						let path = input.path === "" ? "--" : input.path; 
@@ -146,10 +147,11 @@ class Runner {
 			process.stderr.write(test.out + "\n");
 			this._errors++;
 		}
-		resultObj["inputs"] = test.inputs
-		this._results.push(resultObj)
-		this._times.push(`${file.path} took ${time / 1000}s`);
 
+		this._times.push(`${file.path} took ${time / 1000}s`);
+		resultObj["inputs"] = test.inputs
+		resultObj["time"] = `${time/1000}s`
+		this._results.push(resultObj)
 		this.postTest();
 	}
 

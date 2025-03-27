@@ -55,8 +55,8 @@ if (process.argv.length >= 3) {
 
 		done.forEach((item, i) => {
 			const pcPart = Config.printPathCondition ? (` PC: ${JSON.stringify(item.pc)}`) : "";
-			console.log(`[+] ${i} ${JSON.stringify(item.input)}${pcPart} took ${formatSeconds(item.time)}s`);
-			console.log(`[PRINT]${JSON.stringify(item.input)}`)
+			console.log(`[+] ${i} ${JSON.stringify(item.input)}${pcPart} took ${formatSeconds(item.time)}s  [PRINT]${JSON.stringify(item.input)}`);
+
 			item.errors.forEach(error => console.log(`[!] ${error.error}`));
 			if (item.errors.length != 0) {
 				console.log(`[!] ${item.replay}`);

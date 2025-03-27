@@ -29,15 +29,17 @@ class UserService {
         if (this.db.user === undefined) {
             this.db.createTable("user")
         }
+        data.phone = this.escapeHtml(data.phone);
+
         let userIdx = this.db.createEntry("user", data)
         let newUser = this.db.getEntry("user", userIdx)
         return newUser
 
     }
     createUserSanitized(data) {
-        Object.keys(data).forEach(key => {
-            data[key] = this.escapeHtml(data[key]);
-        });
+
+            data.phone = this.escapeHtml(data.phone);
+
         let userIdx = this.db.createEntry("user", data)
         let newUser = this.db.getEntry("user", userIdx)
         return newUser
@@ -56,6 +58,7 @@ class UserService {
     }
 
     getUser(id) {
+        console.log(id)
         let user = this.db.getEntry("user", id)
         if (user !== null) {
             return user
