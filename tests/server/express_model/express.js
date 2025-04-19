@@ -200,7 +200,9 @@ class Application {
                                 req.params[key] = "";
                             }
      // This is a hack, to convert string to int, as expoSE does not model the conversion outside of the unary functions minus and plus.
-                            req.params[key] = (+values[index])
+                            if (+values[index] > 0){
+                                req.params[key] = (+values[index])
+                            }
                         })
                         foundCorrectPath = true
                         middleWare.handle(req, res, this.next)

@@ -18,7 +18,7 @@ class Client {
 
     }
     generateRequest() {
-        var url = S$.symbol("path", "/messages/1")
+        var url = S$.symbol("path", "/")
         if (url == "" || url == undefined) {
             throw "invalid url"
         }
